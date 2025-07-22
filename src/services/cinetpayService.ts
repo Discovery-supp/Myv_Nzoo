@@ -72,6 +72,11 @@ class CinetPayService {
         throw new Error('CinetPay API credentials are missing. Please check your environment variables.');
       }
 
+      // Séparer le nom complet en prénom et nom de famille
+      const nameParts = paymentData.customerName?.trim().split(' ') || ['Client'];
+      const customerName = nameParts[0] || 'Client';
+      const customerSurname = nameParts.length > 1 ? nameParts.slice(1).join(' ') : nameParts[0] || 'Anonyme';
+
       const payload = {
         apikey: this.config.apiKey,
         site_id: this.config.siteId,
@@ -80,8 +85,8 @@ class CinetPayService {
         currency: paymentData.currency,
         channels: paymentData.channels,
         description: paymentData.description,
-        customer_name: paymentData.customerName || '',
-        customer_surname: '', // Requis par CinetPay
+        customer_name: customerName,
+        customer_surname: customerSurname, // Maintenant toujours rempli
         customer_email: paymentData.customerEmail || '',
         customer_phone_number: paymentData.customerPhone || '',
         customer_address: '', // Optionnel mais peut être requis
