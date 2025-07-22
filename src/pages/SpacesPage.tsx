@@ -167,14 +167,43 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
                     className="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col"
                   >
                     <div className="relative overflow-hidden">
-                      <img
-                        src={space.images[0]}
-                        alt={space.title}
-                        className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                      {/* Galerie d'images */}
+                      <div className="relative h-64 bg-gray-200 dark:bg-gray-700">
+                        {space.images && space.images.length > 0 ? (
+                          <img
+                            src={space.images[0]}
+                            alt={space.title}
+                            className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                            loading="lazy"
+                            decoding="async"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop';
+                            }}
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
+                            <div className="text-center">
+                              <div className="w-16 h-16 mx-auto mb-2 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                                <svg className="w-8 h-8 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                              </div>
+                              <p className="text-sm text-gray-500 dark:text-gray-400">{space.title}</p>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Indicateur de galerie si plusieurs images */}
+                        {space.images && space.images.length > 1 && (
+                          <div className="absolute bottom-3 right-3 bg-black bg-opacity-60 text-white px-2 py-1 rounded-full text-xs font-medium">
+                            📷 {space.images.length}
+                          </div>
+                        )}
+                        
+                        {/* Overlay gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                      </div>
                     </div>
                     
                     <div className="p-6 flex flex-col flex-grow">
