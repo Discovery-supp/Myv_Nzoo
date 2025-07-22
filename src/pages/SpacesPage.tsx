@@ -114,11 +114,26 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
 
         {/* Header Section */}
         <section className="relative bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 py-20">
+          {/* Background Banner */}
+          <div className="absolute inset-0 overflow-hidden">
+            <img
+              src="/Bannière_Pack 2.png"
+              alt="Bannière Pack 2"
+              className="w-full h-full object-cover opacity-30"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/80 to-blue-800/80 dark:from-blue-800/80 dark:to-blue-900/80"></div>
+          </div>
+          
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
+              className="relative z-10"
             >
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 {t.title}
