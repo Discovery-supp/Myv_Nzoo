@@ -34,10 +34,10 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
       backHome: 'Retour à l\'accueil'
     },
     en: {
-      title: 'Our Workspaces',
-      subtitle: 'Discover our modern and equipped spaces for all your professional needs',
-      bookButton: 'Book',
-      backHome: 'Back to home'
+      title: 'Nos Espaces de Travail',
+      subtitle: 'Découvrez nos espaces modernes et équipés pour tous vos besoins professionnels',
+      bookButton: 'Réserver',
+      backHome: 'Retour à l\'accueil'
     }
   };
 
@@ -189,7 +189,7 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
                       {/* Features */}
                       <div className="mb-6">
                         <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                          {language === 'fr' ? 'Équipements inclus :' : 'Included features:'}
+                          Équipements inclus :
                         </h4>
                         <ul className="space-y-1">
                           {space.features.slice(0, 3).map((feature, idx) => (
@@ -200,7 +200,7 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
                           ))}
                           {space.features.length > 3 && (
                             <li className="text-sm text-gray-500 italic">
-                              {language === 'fr' ? `+${space.features.length - 3} autres...` : `+${space.features.length - 3} more...`}
+                              +{space.features.length - 3} autres...
                             </li>
                           )}
                         </ul>
@@ -231,19 +231,16 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
         <section className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-              {language === 'fr' ? 'Prêt à réserver votre espace ?' : 'Ready to book your space?'}
+              Prêt à réserver votre espace ?
             </h2>
             <p className="text-gray-600 dark:text-gray-300 mb-8">
-              {language === 'fr' 
-                ? 'Choisissez l\'espace qui correspond le mieux à vos besoins et réservez en quelques clics.'
-                : 'Choose the space that best fits your needs and book in just a few clicks.'
-              }
+              Choisissez l'espace qui correspond le mieux à vos besoins et réservez en quelques clics.
             </p>
             <Link
               to="/reservation/coworking"
               className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
-              {language === 'fr' ? 'Commencer ma réservation' : 'Start my booking'}
+              Commencer ma réservation
             </Link>
           </div>
         </section>

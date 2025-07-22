@@ -13,7 +13,7 @@ export const useSpaces = () => {
       const { data, error } = await supabase
         .from('spaces')
         .select('*')
-        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: true })
 
       if (error) throw error
       setSpaces(data || [])

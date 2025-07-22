@@ -25,9 +25,6 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
     hourly_price: 0,
     is_active: true,
     images: [] as string[],
-    display_order: 0,
-    admin_notes: '',
-    availability_status: 'available' as 'available' | 'maintenance' | 'reserved' | 'unavailable'
   });
   const [newFeature, setNewFeature] = useState('');
   const [newImage, setNewImage] = useState('');
@@ -145,9 +142,6 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
         hourly_price: editingSpace.hourly_price || 0,
         is_active: editingSpace.is_active,
         images: editingSpace.images || [],
-        display_order: editingSpace.display_order || 0,
-        admin_notes: editingSpace.admin_notes || '',
-        availability_status: editingSpace.availability_status || 'available'
       });
     }
   }, [editingSpace]);
@@ -165,9 +159,6 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
       hourly_price: 0,
       is_active: true,
       images: [],
-      display_order: 0,
-      admin_notes: '',
-      availability_status: 'available'
     });
     setEditingSpace(null);
     setNewFeature('');
@@ -492,8 +483,8 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
                   </div>
                 </div>
 
-                {/* Capacité et ordre */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Capacité */}
+                <div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       {t.form.maxOccupants}
@@ -503,18 +494,6 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
                       min="1"
                       value={formData.max_occupants}
                       onChange={(e) => setFormData(prev => ({ ...prev, max_occupants: parseInt(e.target.value) || 1 }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t.form.displayOrder}
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={formData.display_order}
-                      onChange={(e) => setFormData(prev => ({ ...prev, display_order: parseInt(e.target.value) || 0 }))}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -605,23 +584,8 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
                   </div>
                 </div>
 
-                {/* Statuts */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t.form.availabilityStatus}
-                    </label>
-                    <select
-                      value={formData.availability_status}
-                      onChange={(e) => setFormData(prev => ({ ...prev, availability_status: e.target.value as any }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    >
-                      <option value="available">{t.status.available}</option>
-                      <option value="maintenance">{t.status.maintenance}</option>
-                      <option value="reserved">{t.status.reserved}</option>
-                      <option value="unavailable">{t.status.unavailable}</option>
-                    </select>
-                  </div>
+                {/* Statut actif */}
+                <div>
                   <div className="flex items-center">
                     <label className="flex items-center">
                       <input
@@ -633,19 +597,6 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
                       {t.form.isActive}
                     </label>
                   </div>
-                </div>
-
-                {/* Notes admin */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t.form.adminNotes}
-                  </label>
-                  <textarea
-                    value={formData.admin_notes}
-                    onChange={(e) => setFormData(prev => ({ ...prev, admin_notes: e.target.value }))}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
                 </div>
 
                 {/* Boutons */}

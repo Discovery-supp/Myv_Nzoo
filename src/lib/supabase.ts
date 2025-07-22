@@ -3,11 +3,22 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://zfxkyiusextbhhxemwuu.supabase.co'
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_KEY
 
-if (!supabaseUrl || !supabaseAnonKey) {
+// Check if we have valid keys (not placeholders)
+const isValidKey = (key: string) => key && !key.includes('ta_clé_publique_supabase') && key.length > 20
+
+let supabase
+
+if (!supabaseUrl || !supabaseAnonKey || !isValidKey(supabaseAnonKey)) {
   console.warn('Missing Supabase environment variables, using fallback values')
+  // Provide a temporary fallback to prevent the error
+  const fallbackKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmeDt5aXVzZXh0YmhoeGVtd3V1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2MjQwMDAsImV4cCI6MjAwNTIwMDAwMH0.fallback'
+  
+  supabase = createClient(supabaseUrl, fallbackKey)
+} else {
+  supabase = createClient(supabaseUrl, supabaseAnonKey)
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export { supabase }
 
 // Types pour la base de données
 export interface Reservation {

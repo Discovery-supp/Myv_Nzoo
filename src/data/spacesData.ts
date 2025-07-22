@@ -51,9 +51,9 @@ export const spacesData: SpacesData = {
   },
   en: {
     coworking: {
-      title: 'Coworking Space',
-      description: 'Modern and equipped shared workspace',
-      features: ['High-Speed WiFi', 'Free Coffee/Tea', 'Printer', 'Meeting Room'],
+      title: 'Espace Coworking',
+      description: 'Espace de travail partagé moderne et équipé',
+      features: ['WiFi Haut Débit', 'Café/Thé Gratuit', 'Imprimante', 'Salle de Réunion'],
       dailyPrice: 15,
       monthlyPrice: 300,
       yearlyPrice: 3000,
@@ -62,9 +62,9 @@ export const spacesData: SpacesData = {
       type: 'coworking'
     },
     'bureau-prive': {
-      title: 'Private Office',
-      description: 'Fully equipped private office for your team',
-      features: ['Private Office', 'Dedicated WiFi', 'Parking', '24/7 Security'],
+      title: 'Bureau Privé',
+      description: 'Bureau privé entièrement équipé pour votre équipe',
+      features: ['Bureau Privé', 'WiFi Dédié', 'Parking', 'Sécurité 24/7'],
       monthlyPrice: 500,
       yearlyPrice: 5500,
       maxOccupants: 10,
@@ -72,9 +72,9 @@ export const spacesData: SpacesData = {
       type: 'bureau-prive'
     },
     'salle-reunion': {
-      title: 'Meeting Room',
-      description: 'Modern room for your professional meetings',
-      features: ['Presentation Screen', 'Audio System', 'WiFi', 'Air Conditioning'],
+      title: 'Salle de Réunion',
+      description: 'Salle moderne pour vos réunions professionnelles',
+      features: ['Écran de Présentation', 'Système Audio', 'WiFi', 'Climatisation'],
       hourlyPrice: 25,
       maxOccupants: 12,
       images: ['/salle_reunion.jpg', '/WhatsApp Image 2025-07-11 à 10.17.28_c20d6202.jpg'],

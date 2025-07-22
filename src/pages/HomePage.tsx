@@ -10,7 +10,7 @@ const texts = {
     hero: {
       title: 'Réservez votre espace de travail idéal',
       subtitle:
-        'Des bureaux modernes, du coworking flexible, et des salles de réunion professionnelles à Kinshasa',
+        'Des bureaux modernes, du coworking flexible et des salles de réunion professionnelles à Kinshasa',
       ctaPrimary: 'Réserver maintenant',
     },
     spacesTitle: 'Nos Espaces',
@@ -20,77 +20,77 @@ const texts = {
       {
         icon: <Calendar className="w-8 h-8 text-blue-600" />,
         title: 'Réservation Simple',
-        desc: 'Système de réservation intuitif avec calendrier interactif.',
+        desc: 'Système de réservation intuitif avec calendrier interactif',
       },
       {
         icon: <CreditCard className="w-8 h-8 text-green-600" />,
         title: 'Paiement Sécurisé',
-        desc: 'Cartes VISA et Mobile Money acceptés.',
+        desc: 'Cartes VISA et Mobile Money acceptés',
       },
       {
         icon: <Shield className="w-8 h-8 text-purple-600" />,
         title: 'Support 24/7',
-        desc: 'Une équipe dédiée toujours disponible.',
+        desc: 'Une équipe dédiée toujours disponible',
       },
     ],
     testimonials: [
       {
         name: 'Marie Dupont',
-        text: 'Excellent service, espaces très confortables et bien équipés.',
+        text: 'Excellent service, espaces très confortables et bien équipés',
       },
       {
         name: 'Jean Martin',
-        text: 'Réservation simple et rapide, je recommande vivement!',
+        text: 'Réservation simple et rapide, je recommande vivement !',
       },
       {
         name: 'Sophie Bernard',
-        text: 'Le support client est toujours disponible et efficace.',
+        text: 'Le support client est toujours disponible et efficace',
       },
     ],
-    toggleLangLabel: 'Switch to English',
+    toggleLangLabel: 'Passer en anglais',
   },
   en: {
     hero: {
-      title: 'Book your ideal workspace',
+      title: 'Réservez votre espace de travail idéal',
       subtitle:
-        'Modern offices, flexible coworking, and professional meeting rooms in Kinshasa',
-      ctaPrimary: 'Book now',
+        'Des bureaux modernes, du coworking flexible et des salles de réunion professionnelles à Kinshasa',
+      ctaPrimary: 'Réserver maintenant',
     },
-    spacesTitle: 'Our Spaces',
-    featuresTitle: 'Why choose Nzoo Immo?',
-    testimonialsTitle: 'Testimonials',
+    spacesTitle: 'Nos Espaces',
+    featuresTitle: 'Pourquoi choisir Nzoo Immo ?',
+    testimonialsTitle: 'Témoignages',
     features: [
       {
         icon: <Calendar className="w-8 h-8 text-blue-600" />,
-        title: 'Simple Booking',
-        desc: 'Intuitive booking system with interactive calendar.',
+        title: 'Réservation Simple',
+        desc: 'Système de réservation intuitif avec calendrier interactif',
       },
       {
         icon: <CreditCard className="w-8 h-8 text-green-600" />,
-        title: 'Secure Payment',
-        desc: 'VISA cards and Mobile Money accepted.',
+        title: 'Paiement Sécurisé',
+        desc: 'Cartes VISA et Mobile Money acceptés',
       },
       {
         icon: <Shield className="w-8 h-8 text-purple-600" />,
-        title: '24/7 Support',
-        desc: 'Dedicated team always available.',
+        title: 'Support 24/7',
+        desc: 'Une équipe dédiée toujours disponible',
       },
     ],
     testimonials: [
       {
         name: 'Marie Dupont',
-        text: 'Excellent service, very comfortable and well-equipped spaces.',
+        text: 'Excellent service, espaces très confortables et bien équipés',
       },
       {
         name: 'Jean Martin',
-        text: 'Easy and quick booking, highly recommend!',
+        text: 'Réservation simple et rapide, je recommande vivement !',
       },
       {
         name: 'Sophie Bernard',
-        text: 'Customer support is always available and efficient.',
+        text: 'Le support client est toujours disponible et efficace',
       },
     ],
-    toggleLangLabel: 'Passer en français',
+    toggleLangLabel: 'Switch to English',
   },
 };
 
@@ -188,13 +188,10 @@ const HomePage: React.FC = () => {
               className="text-center mb-16"
             >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-                {lang === 'fr' ? 'Nos Services' : 'Our Services'}
+                Nos Services
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                {lang === 'fr' 
-                  ? 'Découvrez nos packs adaptés à tous vos besoins professionnels'
-                  : 'Discover our packages adapted to all your professional needs'
-                }
+                Découvrez nos packs adaptés à tous vos besoins professionnels
               </p>
             </motion.div>
 
@@ -212,14 +209,11 @@ const HomePage: React.FC = () => {
                    <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Startup" className="w-20 h-16 object-cover rounded-lg" />
                   </div>
                   <h3 className="text-xl font-bold text-blue-800 dark:text-blue-200">
-                    {lang === 'fr' ? 'PACK STARTUP & FREE-LANCE' : 'STARTUP & FREELANCE PACK'}
+                    PACK STARTUP & FREE-LANCE
                   </h3>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  {lang === 'fr' 
-                    ? 'Destiné aux startups, freelances, télétravailleurs et professionnels à la recherche d\'un espace flexible, accessible et stimulant.'
-                    : 'For startups, freelancers, remote workers and professionals looking for a flexible, accessible and stimulating space.'
-                  }
+                  Destiné aux startups, freelances, télétravailleurs et professionnels à la recherche d'un espace flexible, accessible et stimulant.
                 </p>
                 <div className="mb-4">
                   <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">$300/mois</span>
@@ -228,23 +222,23 @@ const HomePage: React.FC = () => {
                 <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Accès à un poste de travail en open space' : 'Access to open space workstation'}
+                    Accès à un poste de travail en open space
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Connexion Internet haut débit' : 'High-speed Internet connection'}
+                    Connexion Internet haut débit
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Accès à l\'espace détente (café/thé en option)' : 'Access to relaxation area (coffee/tea optional)'}
+                    Accès à l'espace détente (café/thé en option)
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? '2h gratuites de salles de réunion/semaine' : '2 free hours of meeting rooms/week'}
+                    2h gratuites de salles de réunion/semaine
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Réception de courrier professionnel' : 'Professional mail reception'}
+                    Réception de courrier professionnel
                   </li>
                 </ul>
               </motion.div>
@@ -262,14 +256,11 @@ const HomePage: React.FC = () => {
                    <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Welcome" className="w-20 h-16 object-cover rounded-lg" />
                   </div>
                   <h3 className="text-xl font-bold text-green-800 dark:text-green-200">
-                    {lang === 'fr' ? 'PACK WELCOME TO KIN' : 'WELCOME TO KIN PACK'}
+                    PACK WELCOME TO KIN
                   </h3>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  {lang === 'fr' 
-                    ? 'Destiné aux entrepreneurs étrangers, membres de la diaspora et professionnels internationaux souhaitant s\'implanter à Kinshasa.'
-                    : 'For foreign entrepreneurs, diaspora members and international professionals wishing to establish themselves in Kinshasa.'
-                  }
+                  Destiné aux entrepreneurs étrangers, membres de la diaspora et professionnels internationaux souhaitant s'implanter à Kinshasa.
                 </p>
                 <div className="mb-4">
                   <span className="text-2xl font-bold text-green-600 dark:text-green-400">$1000/mois</span>
@@ -277,23 +268,23 @@ const HomePage: React.FC = () => {
                 <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Accès à un poste de travail en open space' : 'Access to open space workstation'}
+                    Accès à un poste de travail en open space
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Hébergement studio meublé à proximité' : 'Furnished studio accommodation nearby'}
+                    Hébergement studio meublé à proximité
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Accompagnement personnalisé à l\'installation' : 'Personalized installation support'}
+                    Accompagnement personnalisé à l'installation
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Services de secrétariat partiels' : 'Partial secretarial services'}
+                    Services de secrétariat partiels
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Support bilingue (français/anglais)' : 'Bilingual support (French/English)'}
+                    Support bilingue (français/anglais)
                   </li>
                 </ul>
               </motion.div>
@@ -311,40 +302,37 @@ const HomePage: React.FC = () => {
                    <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Investment" className="w-20 h-16 object-cover rounded-lg" />
                   </div>
                   <h3 className="text-xl font-bold text-purple-800 dark:text-purple-200">
-                    {lang === 'fr' ? 'PACK INVEST LOUNGE' : 'INVEST LOUNGE PACK'}
+                    PACK INVEST LOUNGE
                   </h3>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  {lang === 'fr' 
-                    ? 'Destiné aux investisseurs et Business Angels souhaitant s\'implanter ou développer une activité à Kinshasa.'
-                    : 'For investors and Business Angels wishing to establish or develop an activity in Kinshasa.'
-                  }
+                  Destiné aux investisseurs et Business Angels souhaitant s'implanter ou développer une activité à Kinshasa.
                 </p>
                 <div className="mb-4">
                   <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
-                    {lang === 'fr' ? 'Sur mesure' : 'Custom pricing'}
+                    Sur mesure
                   </span>
                 </div>
                 <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Recherche de partenariats fiables' : 'Reliable partnership search'}
+                    Recherche de partenariats fiables
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Facilitation des échanges locaux' : 'Local exchange facilitation'}
+                    Facilitation des échanges locaux
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Visibilité aux projets' : 'Project visibility'}
+                    Visibilité aux projets
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Identification des meilleurs profils' : 'Best profile identification'}
+                    Identification des meilleurs profils
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Suivi des projets financés' : 'Funded project tracking'}
+                    Suivi des projets financés
                   </li>
                 </ul>
               </motion.div>
@@ -362,42 +350,39 @@ const HomePage: React.FC = () => {
                    <img src="https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Domiciliation" className="w-20 h-16 object-cover rounded-lg" />
                   </div>
                   <h3 className="text-xl font-bold text-orange-800 dark:text-orange-200">
-                    {lang === 'fr' ? 'DOMICILIATION COMMERCIALE' : 'COMMERCIAL DOMICILIATION'}
+                    DOMICILIATION COMMERCIALE
                   </h3>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  {lang === 'fr' 
-                    ? 'Services de domiciliation commerciale destinée aux Startups, PME, Freelances et porteurs de projets.'
-                    : 'Commercial domiciliation services for Startups, SMEs, Freelancers and project holders.'
-                  }
+                  Services de domiciliation commerciale destinée aux Startups, PME, Freelances et porteurs de projets.
                 </p>
                 <div className="mb-4">
                   <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">$800/an</span>
                   <span className="text-gray-600 dark:text-gray-400 ml-2">ou $100/mois</span>
                   <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    {lang === 'fr' ? 'Min 6 mois' : 'Min 6 months'}
+                    Min 6 mois
                   </div>
                 </div>
                 <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Adresse légale à Kinshasa' : 'Legal address in Kinshasa'}
+                    Adresse légale à Kinshasa
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Gestion du courrier administratif' : 'Administrative mail management'}
+                    Gestion du courrier administratif
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Attestation de domiciliation' : 'Domiciliation certificate'}
+                    Attestation de domiciliation
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? 'Création de site vitrine' : 'Showcase website creation'}
+                    Création de site vitrine
                   </li>
                   <li className="flex items-center">
                     <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
-                    {lang === 'fr' ? '2 jours/mois en coworking' : '2 days/month coworking access'}
+                    2 jours/mois en coworking
                   </li>
                 </ul>
               </motion.div>
@@ -412,16 +397,13 @@ const HomePage: React.FC = () => {
               className="text-center mt-16"
             >
               <p className="text-gray-600 dark:text-gray-300 mb-8">
-                {lang === 'fr' 
-                  ? 'Besoin d\'un pack personnalisé ? Contactez-nous pour une solution sur mesure.'
-                  : 'Need a custom pack? Contact us for a tailor-made solution.'
-                }
+                Besoin d'un pack personnalisé ? Contactez-nous pour une solution sur mesure.
               </p>
               <button
                 onClick={() => navigate('/spaces')}
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 font-medium"
               >
-                {lang === 'fr' ? 'Découvrir nos espaces' : 'Discover our spaces'}
+                Découvrir nos espaces
               </button>
             </motion.div>
           </div>
@@ -475,19 +457,16 @@ const HomePage: React.FC = () => {
         <section className="py-16 bg-white dark:bg-gray-800">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-              {lang === 'fr' ? 'Découvrez nos espaces' : 'Discover our spaces'}
+              Découvrez nos espaces
             </h2>
             <p className="text-gray-600 dark:text-gray-300 mb-8">
-              {lang === 'fr' 
-                ? 'Explorez notre gamme complète d\'espaces de travail modernes et équipés.'
-                : 'Explore our complete range of modern and equipped workspaces.'
-              }
+              Explorez notre gamme complète d'espaces de travail modernes et équipés.
             </p>
             <Link
               to="/spaces"
               className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
-              {lang === 'fr' ? 'Voir tous nos espaces' : 'View all our spaces'}
+              Voir tous nos espaces
             </Link>
           </div>
         </section>
