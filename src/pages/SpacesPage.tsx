@@ -115,16 +115,20 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
         {/* Header Section */}
         <section className="relative py-32">
           {/* Background Banner */}
-          <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden bg-gradient-to-br from-blue-900/20 to-purple-900/20">
             <img
               src="/Bannière_Pack 2.png"
               alt="Bannière Pack 2"
-              className="w-full h-full object-cover scale-125"
+              className="w-full h-full object-cover object-center scale-110 opacity-90 transition-transform duration-700 hover:scale-115"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
               }}
             />
+            {/* Overlay pour améliorer la lisibilité */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20"></div>
+            {/* Effet de brillance subtil */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent"></div>
           </div>
         </section>
 
