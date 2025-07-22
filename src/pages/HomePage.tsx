@@ -168,7 +168,7 @@ const HomePage: React.FC = () => {
         </div>
 
         {/* Carrousel de bannières */}
-        <section className="relative h-80 md:h-96 lg:h-[500px] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
+        <section className="relative h-96 md:h-[500px] lg:h-[600px] xl:h-[700px] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
           <div className="relative w-full h-full">
             {bannerImages.map((image, index) => (
               <motion.div
@@ -184,7 +184,7 @@ const HomePage: React.FC = () => {
                 <img
                   src={image}
                   alt={`Bannière ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover scale-105"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
