@@ -11,6 +11,8 @@ if (!supabaseUrl) {
   throw new Error('VITE_SUPABASE_URL is required')
 }
 
+let supabase: any
+
 if (!supabaseAnonKey || !isValidKey(supabaseAnonKey)) {
   console.error('❌ Invalid Supabase API key detected!')
   console.error('Please update your .env file with a valid VITE_SUPABASE_ANON_KEY')
@@ -32,13 +34,13 @@ if (!supabaseAnonKey || !isValidKey(supabaseAnonKey)) {
     }
   }
   
-  // Export the invalid client that will provide clear error messages
-  export { invalidClient as supabase }
+  supabase = invalidClient
 } else {
   // Create the real Supabase client
-  const supabase = createClient(supabaseUrl, supabaseAnonKey)
-  export { supabase }
+  supabase = createClient(supabaseUrl, supabaseAnonKey)
 }
+
+export { supabase }
 
 // Types pour la base de données
 export interface Reservation {
