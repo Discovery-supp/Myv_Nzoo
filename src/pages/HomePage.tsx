@@ -94,9 +94,18 @@ const texts = {
   },
 };
 
+// Images de bannière pour le carrousel
+const bannerImages = [
+  '/Bannière_Pack 1.png',
+  '/Bannière_Pack 2.png',
+  '/Bannière_Pack 3.png',
+  '/Bannière_Pack 5.png',
+  '/Bannière_Pack 6.png'
+];
 const HomePage: React.FC = () => {
   const [lang, setLang] = useState<'fr' | 'en'>('fr');
   const [darkMode, setDarkMode] = useState(false);
+  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   const navigate = useNavigate();
 
   // Persist dark mode in localStorage
@@ -111,6 +120,16 @@ const HomePage: React.FC = () => {
     localStorage.setItem('dark', darkMode.toString());
   }, [darkMode]);
 
+  // Carrousel automatique des bannières
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBannerIndex((prevIndex) => 
+        (prevIndex + 1) % bannerImages.length
+      );
+    }, 4000); // Change d'image toutes les 4 secondes
+
+    return () => clearInterval(interval);
+  }, []);
   const toggleDark = () => setDarkMode((d) => !d);
   const toggleLang = () => setLang((l) => (l === 'fr' ? 'en' : 'fr'));
 
@@ -150,6 +169,48 @@ const HomePage: React.FC = () => {
           </button>
         </div>
 
+        {/* Carrousel de bannières */}
+        <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden bg-gray-100 dark:bg-gray-800">
+          <div className="relative w-full h-full">
+            {bannerImages.map((image, index) => (
+              <motion.div
+                key={index}
+                className="absolute inset-0 w-full h-full"
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ 
+                  opacity: index === currentBannerIndex ? 1 : 0,
+                  x: index === currentBannerIndex ? 0 : (index < currentBannerIndex ? -100 : 100)
+                }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+              >
+                <img
+                  src={image}
+                  alt={`Bannière ${index + 1}`}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                />
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Indicateurs de pagination */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {bannerImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentBannerIndex(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentBannerIndex 
+                    ? 'bg-white shadow-lg' 
+                    : 'bg-white/50 hover:bg-white/75'
+                }`}
+              />
+            ))}
+          </div>
+        </section>
         {/* Hero Section */}
         <section className="relative flex items-center justify-center bg-black min-h-[80vh]">
           <img
