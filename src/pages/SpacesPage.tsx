@@ -113,13 +113,13 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
         </div>
 
         {/* Header Section */}
-        <section className="relative py-32">
+        <section className="relative py-48">
           {/* Background Banner */}
           <div className="absolute inset-0 overflow-hidden">
             <img
               src="/Bannière_Pack 2.png"
               alt="Bannière Pack 2"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover scale-110"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
