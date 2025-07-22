@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CheckCircle, CreditCard, Smartphone, Banknote } from 'lucide-react';
+import { CheckCircle, CreditCard, Smartphone, Banknote, AlertCircle, Clock } from 'lucide-react';
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { createReservation } from '../services/reservationService';
 import { getSpaceInfo } from '../data/spacesData';
 import { motion } from 'framer-motion';
+import { usePayment } from '../hooks/usePayment';
+import CongoPaymentMethods from '../components/CongoPaymentMethods';
+import { CONGO_PAYMENT_METHODS } from '../services/cinetpayService';
 
 interface ReservationPageProps {
   language: 'fr' | 'en';
 }
-
-const CINETPAY_API_KEY = '17852597076873f647d76131.41366104';
-const CINETPAY_SITE_ID = '105901836';
 
 const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
   const { spaceType } = useParams();
@@ -29,21 +29,27 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
   });
   const [currentStep, setCurrentStep] = useState(1);
   const [showPayment, setShowPayment] = useState(false);
-  // Ajout 'cash' ici
-  const [paymentMethod, setPaymentMethod] = useState<'mobileMoney' | 'visa' | 'cash' | null>(null);
-
-  // Nouveaux états pour paiement avancé
-  const [paymentToken, setPaymentToken] = useState<string | null>(null);
-  const [transactionId, setTransactionId] = useState<string | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [paymentWindow, setPaymentWindow] = useState<Window | null>(null);
-  const [checkingPayment, setCheckingPayment] = useState(false);
-  const [paymentProcessing, setPaymentProcessing] = useState(false);
-  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   // Nouveaux états pour la gestion des réservations
   const [reservationSuccess, setReservationSuccess] = useState(false);
   const [reservationError, setReservationError] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
+
+  // Hook de paiement CinetPay
+  const {
+    isLoading: paymentLoading,
+    isProcessing: paymentProcessing,
+    isChecking: checkingPayment,
+    error: paymentError,
+    paymentStatus,
+    transactionId,
+    initiatePayment,
+    openPaymentWindow,
+    startPaymentPolling,
+    resetPayment
+  } = usePayment();
 
   // --- Ajout useEffect pour forcer subscriptionType si bureau-prive ---
   useEffect(() => {
@@ -84,9 +90,12 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
         visa: 'Carte VISA',
         cash: "Paiement en espèces",
         total: 'Total à Payer',
-        processing: 'Traitement du Paiement...',
+        processing: 'Traitement en cours...',
         checking: 'Vérification du paiement en cours...',
         error: 'Erreur de paiement : ',
+        success: 'Paiement réussi !',
+        failed: 'Paiement échoué',
+        cancelled: 'Paiement annulé'
       },
       buttons: {
         next: 'Suivant',
@@ -137,9 +146,12 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
         visa: 'VISA Card',
         cash: 'Cash Payment',
         total: 'Total to Pay',
-        processing: 'Processing Payment...',
+        processing: 'Processing...',
         checking: 'Checking payment status...',
         error: 'Payment error: ',
+        success: 'Payment successful!',
+        failed: 'Payment failed',
+        cancelled: 'Payment cancelled'
       },
       buttons: {
         next: 'Next',
@@ -230,7 +242,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
           formData.activity !== ''
         );
       case 3:
-        return paymentMethod !== null && !paymentProcessing;
+        return selectedPaymentMethod !== null && !paymentProcessing;
       default:
         return false;
     }
@@ -246,122 +258,46 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
-  // ------------- DÉBUT intégration paiement CinetPay avancé -------------
-  const initiatePayment = async () => {
-    setPaymentProcessing(true);
-    setPaymentError(null);
-
+  // Gestion des paiements avec CinetPay
+  const handleOnlinePayment = async () => {
+    if (!selectedPaymentMethod || !selectedDates) return;
+    
     const amount = calculateTotal();
-    const currency = 'USD';
-    const txId = `NzooImmo_${Date.now()}`;
-    setTransactionId(txId);
-
-    const channels = paymentMethod === 'visa' ? 'CARD' : 'MOBILE_MONEY';
-
-    const payload = {
-      apikey: CINETPAY_API_KEY,
-      site_id: CINETPAY_SITE_ID,
-      transaction_id: txId,
-      amount: amount,
-      currency: currency,
-      channels: channels,
-      description: `Réservation ${spaceType}`,
-      customer_name: formData.fullName,
-      customer_email: formData.email,
-      customer_phone_number: formData.phone,
-      notify_url: 'https://ton-backend.com/api/cinetpay-notify', // à adapter à ton backend
-      return_url: window.location.origin + '/reservation-complete',
+    const currency = 'USD'; // ou 'CDF' selon vos besoins
+    
+    // Déterminer le canal de paiement
+    const paymentMethodData = CONGO_PAYMENT_METHODS[selectedPaymentMethod as keyof typeof CONGO_PAYMENT_METHODS];
+    const channels = paymentMethodData?.code || 'ALL';
+    
+    const paymentData = {
+      amount,
+      currency,
+      channels,
+      description: `Réservation ${spaceInfo?.title} - ${spaceType}`,
+      customerName: formData.fullName,
+      customerEmail: formData.email,
+      customerPhone: formData.phone,
+      returnUrl: `${window.location.origin}/reservation-success`,
+      notifyUrl: `${window.location.origin}/api/payment-webhook`
     };
-
-    try {
-      const res = await fetch('https://api-checkout.cinetpay.com/v2/payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json();
-
-      if (data.code !== '201') {
-        setPaymentError(language === 'fr' ? "Erreur lors de l'initialisation du paiement." : 'Payment initialization error');
-        setPaymentProcessing(false);
-        return;
+    
+    const result = await initiatePayment(paymentData);
+    
+    if (result.success && result.paymentUrl) {
+      const payWindow = openPaymentWindow(result.paymentUrl);
+      if (payWindow && result.transactionId) {
+        setPaymentWindow(payWindow);
+        startPaymentPolling(result.transactionId, payWindow);
       }
-
-      setPaymentToken(data.data.payment_token);
-
-      const win = window.open(`https://payment.cinetpay.com/?payment_token=${data.data.payment_token}`, '_blank', 'width=600,height=700');
-      if (!win) {
-        setPaymentError(language === 'fr' ? "Impossible d'ouvrir la fenêtre de paiement. Autorisez les pop-ups." : 'Cannot open payment window. Allow pop-ups.');
-        setPaymentProcessing(false);
-        return;
-      }
-      setPaymentWindow(win);
-
-      setCheckingPayment(true);
-      checkPaymentStatus(txId, win);
-    } catch (err) {
-      setPaymentError(language === 'fr' ? 'Erreur de connexion au service de paiement.' : 'Payment service connection error');
-      setPaymentProcessing(false);
     }
-  };
-
-  const checkPaymentStatus = (txId: string, win: Window | null) => {
-    const intervalId = setInterval(async () => {
-      if (win && win.closed) {
-        clearInterval(intervalId);
-        setPaymentProcessing(false);
-        setCheckingPayment(false);
-        setPaymentError(language === 'fr' ? "Paiement annulé par l'utilisateur." : 'Payment cancelled by user.');
-        return;
-      }
-
-      try {
-        const statusRes = await fetch(
-          `https://api-checkout.cinetpay.com/v2/payment/check?apikey=${CINETPAY_API_KEY}&site_id=${CINETPAY_SITE_ID}&transaction_id=${txId}`
-        );
-        const statusData = await statusRes.json();
-
-        if (statusData.code === '00' && statusData.data.status === 'ACCEPTED') {
-          clearInterval(intervalId);
-          setPaymentProcessing(false);
-          setCheckingPayment(false);
-          if (win && !win.closed) win.close();
-          setCurrentStep(4);
-        } else if (statusData.data.status === 'REFUSED' || statusData.data.status === 'CANCELED') {
-          clearInterval(intervalId);
-          setPaymentProcessing(false);
-          setCheckingPayment(false);
-          if (win && !win.closed) win.close();
-          setPaymentError(language === 'fr' ? 'Paiement refusé ou annulé.' : 'Payment refused or cancelled.');
-        }
-      } catch (e) {
-        // ignore network errors, continue checking
-      }
-    }, 5000);
-  };
-
-  // Modifié pour gérer paiement cash
-  const handleReservation = () => {
-    if (!paymentMethod) return;
-
-    if (paymentMethod === 'cash') {
-      handleCashPayment();
-      return;
-    }
-
-    // Paiement en ligne via CinetPay
-    initiatePayment();
   };
 
   const handleCashPayment = async () => {
     if (!selectedDates) return;
 
-    setPaymentProcessing(true);
-    setPaymentError(null);
     setReservationError(null);
 
-    const transactionId = `CASH_${Date.now()}`;
-    setTransactionId(transactionId);
+    const cashTransactionId = `CASH_${Date.now()}`;
 
     try {
       const reservationData = {
@@ -378,7 +314,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
         subscriptionType: formData.subscriptionType,
         amount: calculateTotal(),
         paymentMethod: 'cash',
-        transactionId: transactionId,
+        transactionId: cashTransactionId,
       };
 
       const result = await createReservation(reservationData);
@@ -390,11 +326,27 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
       }
     } catch (error) {
       setReservationError(error instanceof Error ? error.message : 'Erreur lors de la réservation');
-    } finally {
-      setPaymentProcessing(false);
     }
   };
-  // ------------- FIN intégration paiement CinetPay avancé -------------
+
+  // Gestion principale des réservations
+  const handleReservation = () => {
+    if (!selectedPaymentMethod) return;
+
+    if (selectedPaymentMethod === 'CASH') {
+      handleCashPayment();
+    } else {
+      handleOnlinePayment();
+    }
+  };
+
+  // Effet pour gérer le succès du paiement
+  useEffect(() => {
+    if (paymentStatus === 'success') {
+      setCurrentStep(4);
+      setReservationSuccess(true);
+    }
+  }, [paymentStatus]);
 
   const renderStepIndicator = () => (
     <div className="flex items-center justify-center mb-12">
@@ -642,129 +594,93 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
       <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
         <h2 className="text-2xl font-bold mb-8 text-center text-gray-900">{t.payment.title}</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Mobile Money Button */}
-          <button
-            type="button"
-            onClick={() => setPaymentMethod('mobileMoney')}
-            className={`group relative overflow-hidden rounded-xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-200 ${
-              paymentMethod === 'mobileMoney'
-                ? 'bg-orange-600 text-white shadow-xl ring-4 ring-orange-200'
-                : 'bg-white border-2 border-gray-200 text-orange-600 hover:border-orange-300 hover:shadow-xl'
-            }`}
-          >
-            <div className="flex flex-col items-center space-y-4">
-              <div className={`p-3 rounded-full transition-colors ${
-                paymentMethod === 'mobileMoney'
-                  ? 'bg-white/20'
-                  : 'bg-orange-100 group-hover:bg-orange-200'
-              }`}>
-                <Smartphone className={`w-10 h-10 ${
-                  paymentMethod === 'mobileMoney' ? 'text-white' : 'text-orange-600'
-                }`} />
-              </div>
-              <div className="text-center">
-                <h3 className="font-bold text-xl">{t.payment.mobileMoney}</h3>
-                <p className={`text-sm mt-2 ${
-                  paymentMethod === 'mobileMoney' ? 'text-white/80' : 'text-gray-500'
-                }`}>
-                  {language === 'fr' ? 'Orange Money, Airtel Money' : 'Orange Money, Airtel Money'}
-                </p>
-              </div>
-            </div>
-            {paymentMethod === 'mobileMoney' && (
-              <div className="absolute top-3 right-3">
-                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-                  <CheckCircle className="w-5 h-5 text-orange-600" />
-                </div>
-              </div>
-            )}
-          </button>
+        {/* Composant des moyens de paiement du Congo */}
+        <CongoPaymentMethods
+          selectedMethod={selectedPaymentMethod}
+          onMethodSelect={setSelectedPaymentMethod}
+          language={language}
+        />
 
-          {/* Visa Card Button */}
-          <button
-            type="button"
-            onClick={() => setPaymentMethod('visa')}
-            className={`group relative overflow-hidden rounded-xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-200 ${
-              paymentMethod === 'visa'
-                ? 'bg-blue-600 text-white shadow-xl ring-4 ring-blue-200'
-                : 'bg-white border-2 border-gray-200 text-blue-600 hover:border-blue-300 hover:shadow-xl'
-            }`}
-          >
-            <div className="flex flex-col items-center space-y-4">
-              <div className={`p-3 rounded-full transition-colors ${
-                paymentMethod === 'visa'
-                  ? 'bg-white/20'
-                  : 'bg-blue-100 group-hover:bg-blue-200'
-              }`}>
-                <CreditCard className={`w-10 h-10 ${
-                  paymentMethod === 'visa' ? 'text-white' : 'text-blue-600'
-                }`} />
-              </div>
-              <div className="text-center">
-                <h3 className="font-bold text-xl">{t.payment.visa}</h3>
-                <p className={`text-sm mt-2 ${
-                  paymentMethod === 'visa' ? 'text-white/80' : 'text-gray-500'
+        {/* Option paiement en espèces */}
+        <div className="mt-8">
+          <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+            <button
+              type="button"
+              onClick={() => setSelectedPaymentMethod('CASH')}
+              className={`w-full p-6 rounded-xl border-2 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-200 ${
+                selectedPaymentMethod === 'CASH'
+                  ? 'bg-green-600 text-white border-green-600 shadow-xl ring-4 ring-green-200'
+                  : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-green-600 hover:border-green-300 hover:shadow-xl'
+              }`}
+            >
+              <div className="flex items-center justify-center space-x-4">
+                <div className={`p-3 rounded-full transition-colors ${
+                  selectedPaymentMethod === 'CASH'
+                    ? 'bg-white/20'
+                    : 'bg-green-100 dark:bg-green-900/20'
                 }`}>
-                  {language === 'fr' ? 'Visa, Mastercard' : 'Visa, Mastercard'}
-                </p>
-              </div>
-            </div>
-            {paymentMethod === 'visa' && (
-              <div className="absolute top-3 right-3">
-                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-                  <CheckCircle className="w-5 h-5 text-blue-600" />
+                  <Banknote className={`w-8 h-8 ${
+                    selectedPaymentMethod === 'CASH' ? 'text-white' : 'text-green-600'
+                  }`} />
                 </div>
-              </div>
-            )}
-          </button>
-
-          {/* Cash Payment Button */}
-          <button
-            type="button"
-            onClick={() => setPaymentMethod('cash')}
-            className={`group relative overflow-hidden rounded-xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-200 ${
-              paymentMethod === 'cash'
-                ? 'bg-green-600 text-white shadow-xl ring-4 ring-green-200'
-                : 'bg-white border-2 border-gray-200 text-green-600 hover:border-green-300 hover:shadow-xl'
-            }`}
-          >
-            <div className="flex flex-col items-center space-y-4">
-              <div className={`p-3 rounded-full transition-colors ${
-                paymentMethod === 'cash'
-                  ? 'bg-white/20'
-                  : 'bg-green-100 group-hover:bg-green-200'
-              }`}>
-                <Banknote className={`w-10 h-10 ${
-                  paymentMethod === 'cash' ? 'text-white' : 'text-green-600'
-                }`} />
-              </div>
-              <div className="text-center">
-                <h3 className="font-bold text-xl">{t.payment.cash}</h3>
-                <p className={`text-sm mt-2 ${
-                  paymentMethod === 'cash' ? 'text-white/80' : 'text-gray-500'
-                }`}>
-                  {language === 'fr' ? 'Paiement sur place' : 'Pay on-site'}
-                </p>
-              </div>
-            </div>
-            {paymentMethod === 'cash' && (
-              <div className="absolute top-3 right-3">
-                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
+                <div className="text-center">
+                  <h3 className="font-bold text-xl">{t.payment.cash}</h3>
+                  <p className={`text-sm mt-1 ${
+                    selectedPaymentMethod === 'CASH' ? 'text-white/80' : 'text-gray-500 dark:text-gray-400'
+                  }`}>
+                    {language === 'fr' ? 'Paiement sur place' : 'Pay on-site'}
+                  </p>
                 </div>
+                {selectedPaymentMethod === 'CASH' && (
+                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                  </div>
+                )}
               </div>
-            )}
-          </button>
+            </button>
+          </div>
         </div>
 
-        {paymentMethod === 'cash' && (
+        {selectedPaymentMethod === 'CASH' && (
           <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
             <p className="text-green-700 text-center font-medium">
               {language === 'fr'
                 ? "Vous avez choisi de payer en espèces. Merci de régler sur place lors de votre arrivée."
                 : "You have chosen to pay cash. Please pay on-site upon arrival."}
             </p>
+          </div>
+        )}
+
+        {/* Statut du paiement */}
+        {paymentStatus !== 'idle' && (
+          <div className="mt-6">
+            {paymentStatus === 'processing' && (
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-center space-x-3">
+                <Clock className="w-5 h-5 text-blue-600 animate-spin" />
+                <p className="text-blue-700 font-medium">{t.payment.processing}</p>
+              </div>
+            )}
+            
+            {paymentStatus === 'success' && (
+              <div className="p-4 bg-green-50 border border-green-200 rounded-xl flex items-center space-x-3">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                <p className="text-green-700 font-medium">{t.payment.success}</p>
+              </div>
+            )}
+            
+            {paymentStatus === 'failed' && (
+              <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-center space-x-3">
+                <AlertCircle className="w-5 h-5 text-red-600" />
+                <p className="text-red-700 font-medium">{t.payment.failed}</p>
+              </div>
+            )}
+            
+            {paymentStatus === 'cancelled' && (
+              <div className="p-4 bg-orange-50 border border-orange-200 rounded-xl flex items-center space-x-3">
+                <AlertCircle className="w-5 h-5 text-orange-600" />
+                <p className="text-orange-700 font-medium">{t.payment.cancelled}</p>
+              </div>
+            )}
           </div>
         )}
 
@@ -845,15 +761,12 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             occupants: 1,
             subscriptionType: 'daily',
           });
-          setPaymentMethod(null);
-          setPaymentError(null);
-          setTransactionId(null);
+          setSelectedPaymentMethod(null);
           setReservationError(null);
           setReservationSuccess(false);
           setEmailSent(false);
-          setPaymentProcessing(false);
-          setCheckingPayment(false);
           setPaymentWindow(null);
+          resetPayment();
         }}
         className="px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold text-lg shadow-lg transform hover:scale-105"
       >
@@ -914,7 +827,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
                 <button
                   type="submit"
                   className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ml-auto disabled:opacity-50 transition-all duration-300 font-semibold shadow-lg transform hover:scale-105"
-                  disabled={!validateStep(currentStep)}
+                  disabled={!validateStep(currentStep) || paymentLoading}
                 >
                   {t.buttons.next}
                 </button>
@@ -925,11 +838,11 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
                   type="button"
                   onClick={handleReservation}
                   className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ml-auto disabled:opacity-50 transition-all duration-300 font-semibold shadow-lg transform hover:scale-105"
-                  disabled={paymentProcessing || !paymentMethod}
+                  disabled={paymentProcessing || paymentLoading || !selectedPaymentMethod}
                 >
-                  {paymentProcessing ? 
+                  {paymentProcessing || paymentLoading ? 
                     (language === 'fr' ? 'Traitement...' : 'Processing...') : 
-                    (paymentMethod === 'cash' ? t.buttons.reserve : t.buttons.pay)
+                    (selectedPaymentMethod === 'CASH' ? t.buttons.reserve : t.buttons.pay)
                   }
                 </button>
               )}
