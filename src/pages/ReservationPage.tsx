@@ -263,7 +263,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
     if (!selectedPaymentMethod || !selectedDates) return;
     
     const amount = calculateTotal();
-    const currency = 'USD'; // ou 'CDF' selon vos besoins
+    const currency = 'XOF'; // CinetPay utilise XOF pour les tests en sandbox
     
     // Déterminer le canal de paiement
     const paymentMethodData = CONGO_PAYMENT_METHODS[selectedPaymentMethod as keyof typeof CONGO_PAYMENT_METHODS];
@@ -277,8 +277,8 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
       customerName: formData.fullName,
       customerEmail: formData.email,
       customerPhone: formData.phone,
-      returnUrl: `${window.location.origin}/reservation-success`,
-      notifyUrl: `${window.location.origin}/api/payment-webhook`
+      returnUrl: `${window.location.origin}/#/reservation/${spaceType}`,
+      notifyUrl: `${window.location.origin}/webhook/cinetpay`
     };
     
     const result = await initiatePayment(paymentData);

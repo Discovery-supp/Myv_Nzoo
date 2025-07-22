@@ -67,6 +67,11 @@ class CinetPayService {
    */
   async initiatePayment(paymentData: PaymentRequest): Promise<PaymentResponse> {
     try {
+      // Validation des clés API
+      if (!this.config.apiKey || !this.config.siteId) {
+        throw new Error('CinetPay API credentials are missing. Please check your environment variables.');
+      }
+
       const payload = {
         apikey: this.config.apiKey,
         site_id: this.config.siteId,
@@ -75,12 +80,19 @@ class CinetPayService {
         currency: paymentData.currency,
         channels: paymentData.channels,
         description: paymentData.description,
-        customer_name: paymentData.customerName,
-        customer_email: paymentData.customerEmail,
-        customer_phone_number: paymentData.customerPhone,
+        customer_name: paymentData.customerName || '',
+        customer_surname: '', // Requis par CinetPay
+        customer_email: paymentData.customerEmail || '',
+        customer_phone_number: paymentData.customerPhone || '',
+        customer_address: '', // Optionnel mais peut être requis
+        customer_city: 'Kinshasa', // Ville par défaut
+        customer_country: 'CD', // Code pays Congo
+        customer_state: 'Kinshasa', // État/Province
+        customer_zip_code: '00000', // Code postal par défaut
         notify_url: paymentData.notifyUrl,
         return_url: paymentData.returnUrl,
-        lang: 'fr'
+        lang: 'fr',
+        metadata: 'reservation_nzoo_immo' // Métadonnées pour identifier la source
       };
 
       console.log('🔄 Initiation du paiement CinetPay:', payload);
@@ -180,8 +192,8 @@ class CinetPayService {
 
 // Configuration par défaut pour le Congo
 export const cinetPayConfig: CinetPayConfig = {
-  apiKey: import.meta.env.VITE_CINETPAY_API_KEY || '',
-  siteId: import.meta.env.VITE_CINETPAY_SITE_ID || '',
+  apiKey: import.meta.env.VITE_CINETPAY_API_KEY || '4562851296873f6add90553.97743302',
+  siteId: import.meta.env.VITE_CINETPAY_SITE_ID || '105901836',
   environment: import.meta.env.VITE_CINETPAY_ENV === 'production' ? 'production' : 'sandbox'
 };
 
