@@ -8,7 +8,7 @@ interface ReservationManagementProps {
 }
 
 const ReservationManagement: React.FC<ReservationManagementProps> = ({ language }) => {
-  const { reservations, loading, error, updateReservationStatus } = useReservations();
+  const { reservations, loading, error, updateReservationStatus, updateReservation } = useReservations();
   const [editingReservation, setEditingReservation] = useState<string | null>(null);
   const [editFormData, setEditFormData] = useState<Partial<Reservation>>({});
   const [filterStatus, setFilterStatus] = useState<string>('all');
