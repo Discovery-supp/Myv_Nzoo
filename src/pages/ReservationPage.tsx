@@ -866,7 +866,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
   );
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-secondary/5 via-white to-accent/5 dark:from-neutral-900 dark:via-neutral-800 dark:to-primary/10 font-poppins">
+    <main className="min-h-screen bg-light-gray font-poppins">
       <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
         <div className="text-center mb-12 pt-8">

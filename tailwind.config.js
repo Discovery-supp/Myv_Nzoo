@@ -21,7 +21,8 @@ export default {
           700: '#334155',
           800: '#1e293b',
           900: '#0f172a',
-        }
+        },
+        'light-gray': '#D3D6DB'
       },
       fontFamily: {
         'sans': ['Poppins', 'Montserrat', 'system-ui', 'sans-serif'],
