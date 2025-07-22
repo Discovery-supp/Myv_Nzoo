@@ -263,7 +263,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
     if (!selectedPaymentMethod || !selectedDates) return;
     
     const amount = calculateTotal();
-    const currency = 'XOF'; // CinetPay utilise XOF pour les tests en sandbox
+    const currency = 'USD'; // CinetPay supporte USD pour le Congo
     
     // Déterminer le canal de paiement
     const paymentMethodData = CONGO_PAYMENT_METHODS[selectedPaymentMethod as keyof typeof CONGO_PAYMENT_METHODS];
