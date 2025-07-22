@@ -28,6 +28,7 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
   });
   const [newFeature, setNewFeature] = useState('');
   const [newImage, setNewImage] = useState('');
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const translations = {
     fr: {
@@ -163,6 +164,7 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
     setEditingSpace(null);
     setNewFeature('');
     setNewImage('');
+    setSelectedFiles([]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -234,6 +236,29 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
       ...prev,
       images: prev.images.filter((_, i) => i !== index)
     }));
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    setSelectedFiles(files);
+    
+    // Convertir les fichiers en base64 pour l'aperçu
+    files.forEach(file => {
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const base64String = event.target?.result as string;
+          setFormData(prev => ({
+            ...prev,
+            images: [...prev.images, base64String]
+          }));
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    
+    // Réinitialiser l'input file
+    e.target.value = '';
   };
 
   if (loading) {
@@ -547,7 +572,56 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
                     {t.form.images}
                   </label>
                   <div className="space-y-2">
-                    <div className="flex gap-2">
+                    <div className="space-y-2">
+                      {/* URL Input */}
+                      <div className="flex gap-2">
+                        <input
+                          type="url"
+                          value={newImage}
+                          onChange={(e) => setNewImage(e.target.value)}
+                          placeholder="URL de l'image..."
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                        <button
+                          type="button"
+                          onClick={addImage}
+                          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                        >
+                          {t.actions.addImage}
+                        </button>
+                      </div>
+                      
+                      {/* File Input */}
+                      <div className="flex gap-2">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={handleFileSelect}
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => document.querySelector('input[type="file"]')?.click()}
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2"
+                        >
+                          <Upload className="w-4 h-4" />
+                          Parcourir
+                        </button>
+                      </div>
+                      
+                      {/* Separator */}
+                      <div className="flex items-center">
+                        <div className="flex-1 border-t border-gray-300"></div>
+                        <span className="px-3 text-sm text-gray-500">ou</span>
+                        <div className="flex-1 border-t border-gray-300"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Preview des images sélectionnées */}
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {formData.images.map((image, index) => (
+                        <div key={index} className="relative group">
                       <input
                         type="url"
                         value={newImage}
@@ -567,17 +641,24 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
                       {formData.images.map((image, index) => (
                         <div key={index} className="relative">
                           <img
-                            src={image}
+                            src={image.startsWith('data:') ? image : image}
                             alt={`Image ${index + 1}`}
-                            className="w-full h-24 object-cover rounded-lg"
+                            className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xMiAxNkM5Ljc5IDEzLjc5IDkuNzkgMTAuMjEgMTIgOEMxNC4yMSAxMC4yMSAxNC4yMSAxMy43OSAxMiAxNloiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+';
+                            }}
                           />
                           <button
                             type="button"
                             onClick={() => removeImage(index)}
-                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
                           >
                             <X className="w-3 h-3" />
                           </button>
+                          <div className="absolute bottom-1 left-1 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+                            {image.startsWith('data:') ? 'Fichier local' : 'URL'}
+                          </div>
                         </div>
                       ))}
                     </div>
