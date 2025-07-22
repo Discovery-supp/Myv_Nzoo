@@ -100,6 +100,7 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
         passwordMismatch: 'Les mots de passe ne correspondent pas',
         usernameRequired: 'Le nom d\'utilisateur est requis',
         emailRequired: 'L\'email est requis',
+        emailExists: 'Cet email est déjà utilisé par un autre utilisateur',
         passwordRequired: 'Le mot de passe est requis',
         fullNameRequired: 'Le nom complet est requis',
         userCreated: 'Utilisateur créé avec succès',
@@ -149,6 +150,7 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
         passwordMismatch: 'Passwords do not match',
         usernameRequired: 'Username is required',
         emailRequired: 'Email is required',
+        emailExists: 'This email is already used by another user',
         passwordRequired: 'Password is required',
         fullNameRequired: 'Full name is required',
         userCreated: 'User created successfully',
@@ -187,7 +189,7 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
     setEditingUser(null);
   };
 
-  const validateForm = () => {
+  const validateForm = async () => {
     const errors: Record<string, string> = {};
 
     if (!formData.username.trim()) {
@@ -196,6 +198,23 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
 
     if (!formData.email.trim()) {
       errors.email = t.messages.emailRequired;
+    } else if (!editingUser) {
+      // Check for duplicate email only when creating a new user
+      try {
+        const { data: existingUser, error } = await supabase
+          .from('admin_users')
+          .select('id')
+          .eq('email', formData.email.trim())
+          .limit(1);
+
+        if (error) {
+          console.error('Error checking email:', error);
+        } else if (existingUser && existingUser.length > 0) {
+          errors.email = t.messages.emailExists;
+        }
+      } catch (err) {
+        console.error('Error validating email:', err);
+      }
     }
 
     if (!editingUser && !formData.password.trim()) {
@@ -214,10 +233,10 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!validateForm()) {
+    if (!(await validateForm())) {
       return;
     }
 
