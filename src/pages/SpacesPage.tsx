@@ -113,19 +113,18 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
         </div>
 
         {/* Header Section */}
-        <section className="relative bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 py-20">
+        <section className="relative py-32">
           {/* Background Banner */}
           <div className="absolute inset-0 overflow-hidden">
             <img
               src="/Bannière_Pack 2.png"
               alt="Bannière Pack 2"
-              className="w-full h-full object-cover opacity-30"
+              className="w-full h-full object-cover"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/80 to-blue-800/80 dark:from-blue-800/80 dark:to-blue-900/80"></div>
           </div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -135,15 +134,15 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
               transition={{ duration: 0.8 }}
               className="relative z-10"
             >
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 drop-shadow-2xl">
                 {t.title}
               </h1>
-              <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+              <p className="text-xl md:text-2xl text-white mb-10 max-w-4xl mx-auto drop-shadow-xl">
                 {t.subtitle}
               </p>
               <Link
                 to="/"
-                className="inline-flex items-center px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-100 transition-colors font-medium"
+                className="inline-flex items-center px-8 py-4 bg-white text-blue-600 rounded-xl hover:bg-gray-100 transition-all duration-300 font-semibold text-lg shadow-2xl transform hover:scale-105"
               >
                 ← {t.backHome}
               </Link>
