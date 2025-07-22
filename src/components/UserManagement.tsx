@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Plus, Edit, Trash2, Save, X, User, Shield, Eye, EyeOff } from 'lucide-react';
 
+import { supabase } from '../lib/supabase';
+
 interface User {
   id: string;
   username: string;
@@ -16,17 +18,9 @@ interface UserManagementProps {
 }
 
 const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: '1',
-      username: 'admin',
-      email: 'admin@nzooimmo.com',
-      role: 'admin',
-      full_name: 'Administrateur Principal',
-      created_at: new Date().toISOString(),
-      is_active: true
-    }
-  ]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
@@ -41,6 +35,29 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
     is_active: true
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  // Charger les utilisateurs depuis la base de données
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('admin_users')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setUsers(data || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur lors du chargement des utilisateurs');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Charger les utilisateurs au montage du composant
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const translations = {
     fr: {
@@ -193,38 +210,54 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
       return;
     }
 
-    if (editingUser) {
-      // Update existing user
-      setUsers(prev => prev.map(user => 
-        user.id === editingUser.id 
-          ? {
-              ...user,
-              username: formData.username,
-              email: formData.email,
-              role: formData.role,
-              full_name: formData.full_name,
-              is_active: formData.is_active
-            }
-          : user
-      ));
-      console.log(t.messages.userUpdated);
-    } else {
-      // Create new user
-      const newUser: User = {
-        id: Date.now().toString(),
-        username: formData.username,
-        email: formData.email,
-        role: formData.role,
-        full_name: formData.full_name,
-        created_at: new Date().toISOString(),
-        is_active: formData.is_active
-      };
-      setUsers(prev => [...prev, newUser]);
-      console.log(t.messages.userCreated);
-    }
+    handleDatabaseOperation();
+  };
 
-    setIsFormOpen(false);
-    resetForm();
+  const handleDatabaseOperation = async () => {
+    try {
+      if (editingUser) {
+        // Mettre à jour l'utilisateur existant
+        const { error } = await supabase
+          .from('admin_users')
+          .update({
+            username: formData.username,
+            email: formData.email,
+            role: formData.role,
+            full_name: formData.full_name,
+            is_active: formData.is_active,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', editingUser.id);
+
+        if (error) throw error;
+        alert(t.messages.userUpdated);
+      } else {
+        // Créer un nouvel utilisateur
+        // Note: En production, le mot de passe devrait être hashé côté serveur
+        const { error } = await supabase
+          .from('admin_users')
+          .insert([{
+            username: formData.username,
+            email: formData.email,
+            password_hash: `temp_${formData.password}`, // Temporaire pour le développement
+            role: formData.role,
+            full_name: formData.full_name,
+            is_active: formData.is_active
+          }]);
+
+        if (error) throw error;
+        alert(t.messages.userCreated);
+      }
+
+      // Rafraîchir la liste des utilisateurs
+      await fetchUsers();
+      setIsFormOpen(false);
+      resetForm();
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erreur lors de l\'opération';
+      alert('Erreur: ' + errorMessage);
+      console.error('Erreur base de données:', err);
+    }
   };
 
   const handleEdit = (user: User) => {
@@ -243,8 +276,25 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
 
   const handleDelete = (user: User) => {
     if (window.confirm(t.messages.confirmDelete)) {
-      setUsers(prev => prev.filter(u => u.id !== user.id));
-      console.log(t.messages.userDeleted);
+      handleDeleteUser(user.id);
+    }
+  };
+
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      const { error } = await supabase
+        .from('admin_users')
+        .delete()
+        .eq('id', userId);
+
+      if (error) throw error;
+      
+      alert(t.messages.userDeleted);
+      await fetchUsers();
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erreur lors de la suppression';
+      alert('Erreur: ' + errorMessage);
+      console.error('Erreur suppression:', err);
     }
   };
 
@@ -259,6 +309,34 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
       ? 'bg-green-100 text-green-800 border-green-200'
       : 'bg-red-100 text-red-800 border-red-200';
   };
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold text-gray-900">{t.title}</h2>
+        </div>
+        <div className="flex items-center justify-center p-8 bg-white rounded-lg shadow-sm border border-gray-200">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <span className="ml-2">Chargement...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold text-gray-900">{t.title}</h2>
+        </div>
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <p className="font-medium">Erreur de chargement</p>
+          <p className="text-sm mt-1">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

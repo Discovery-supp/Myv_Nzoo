@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, User, Eye, EyeOff, Shield } from 'lucide-react';
 
+import { supabase } from '../lib/supabase';
+
 interface LoginPageProps {
   setIsAuthenticated: (auth: boolean) => void;
   language: 'fr' | 'en';
@@ -66,16 +68,48 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
     setIsLoading(true);
     setError('');
 
-    // Simulate API call
-    setTimeout(() => {
-      if (credentials.username === 'admin' && credentials.password === 'admin123') {
+    try {
+      // Vérifier les identifiants dans la base de données
+      const { data, error } = await supabase
+        .from('admin_users')
+        .select('*')
+        .eq('username', credentials.username)
+        .eq('is_active', true)
+        .single();
+
+      if (error || !data) {
+        setError(t.error);
+        setIsLoading(false);
+        return;
+      }
+
+      // Vérifier le mot de passe (temporaire pour le développement)
+      // En production, utilisez bcrypt ou une méthode de hachage sécurisée
+      const isPasswordValid = 
+        data.password_hash === `temp_${credentials.password}` || // Nouveaux utilisateurs
+        (data.username === 'admin' && credentials.password === 'admin123'); // Utilisateur par défaut
+
+      if (isPasswordValid) {
+        // Stocker les informations utilisateur dans le localStorage
+        localStorage.setItem('currentUser', JSON.stringify({
+          id: data.id,
+          username: data.username,
+          email: data.email,
+          role: data.role,
+          full_name: data.full_name
+        }));
+        
         setIsAuthenticated(true);
         navigate('/admin/dashboard');
       } else {
         setError(t.error);
       }
+    } catch (err) {
+      console.error('Erreur de connexion:', err);
+      setError('Erreur de connexion à la base de données');
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const fillDemoCredentials = () => {

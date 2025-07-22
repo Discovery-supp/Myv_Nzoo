@@ -8,8 +8,17 @@ import AdminDashboard from './pages/AdminDashboard';
 import LoginPage from './pages/LoginPage';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    // Vérifier si l'utilisateur est déjà connecté
+    return localStorage.getItem('currentUser') !== null;
+  });
   const [language, setLanguage] = useState<'fr' | 'en'>('fr');
+
+  // Fonction pour gérer la déconnexion
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser');
+    setIsAuthenticated(false);
+  };
 
   return (
     <Router>
@@ -18,7 +27,7 @@ function App() {
           language={language} 
           setLanguage={setLanguage}
           isAuthenticated={isAuthenticated}
-          setIsAuthenticated={setIsAuthenticated}
+          setIsAuthenticated={handleLogout}
         />
         <Routes>
           <Route path="/" element={<HomePage language={language} />} />

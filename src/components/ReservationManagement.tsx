@@ -145,12 +145,12 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
     if (!editingReservation) return;
     
     try {
-      // Ici vous pouvez ajouter la logique pour sauvegarder les modifications
-      // await updateReservation(editingReservation, editFormData);
+      await updateReservation(editingReservation, editFormData);
       setEditingReservation(null);
       setEditFormData({});
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
+      alert('Erreur lors de la sauvegarde: ' + (error instanceof Error ? error.message : 'Erreur inconnue'));
     }
   };
 

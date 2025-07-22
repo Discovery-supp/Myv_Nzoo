@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ language, setLanguage, isAuthenticated,
   const t = translations[language];
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
+    setIsAuthenticated(); // Appeler la fonction de déconnexion
     navigate('/');
   };
 
