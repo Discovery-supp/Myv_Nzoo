@@ -126,28 +126,6 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
               }}
             />
           </div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="relative z-10"
-            >
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 drop-shadow-2xl">
-                {t.title}
-              </h1>
-              <p className="text-xl md:text-2xl text-white mb-10 max-w-4xl mx-auto drop-shadow-xl">
-                {t.subtitle}
-              </p>
-              <Link
-                to="/"
-                className="inline-flex items-center px-8 py-4 bg-white text-blue-600 rounded-xl hover:bg-gray-100 transition-all duration-300 font-semibold text-lg shadow-2xl transform hover:scale-105"
-              >
-                ← {t.backHome}
-              </Link>
-            </motion.div>
-          </div>
         </section>
 
         {/* Spaces Section */}
