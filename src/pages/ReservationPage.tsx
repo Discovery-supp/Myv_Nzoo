@@ -398,12 +398,12 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
   const renderStepIndicator = () => (
     <div className="flex items-center justify-center mb-12">
       {[1, 2, 3, 4].map((step) => (
-        <div key={step} className="flex items-center relative">
+        <div key={step} className="flex items-center">
           <div
             className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-300 ${
               currentStep >= step 
-                ? 'bg-gradient-to-r from-secondary to-accent text-white shadow-lg transform scale-110' 
-                : 'bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400'
+                ? 'bg-blue-600 text-white shadow-lg transform scale-110' 
+                : 'bg-gray-200 text-gray-600'
             }`}
           >
             {currentStep > step ? <CheckCircle className="w-7 h-7" /> : step}
@@ -412,8 +412,8 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             <div
               className={`w-20 h-1 mx-3 rounded-full transition-all duration-300 ${
                 currentStep > step 
-                  ? 'bg-gradient-to-r from-secondary to-accent' 
-                  : 'bg-neutral-200 dark:bg-neutral-700'
+                  ? 'bg-blue-600' 
+                  : 'bg-gray-200'
               }`}
             />
           )}
@@ -424,48 +424,48 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
 
   const renderStep1 = () => (
     <div className="space-y-10">
-      <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-8 border border-neutral-200 dark:border-neutral-700 backdrop-blur-sm">
-        <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 font-montserrat">{spaceInfo.title}</h3>
-        <p className="text-neutral-600 dark:text-neutral-300 mb-8 text-lg leading-relaxed">{spaceInfo.description}</p>
+      <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 backdrop-blur-sm">
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">{spaceInfo.title}</h3>
+        <p className="text-gray-600 mb-8 text-lg leading-relaxed">{spaceInfo.description}</p>
 
         <div className="grid md:grid-cols-2 gap-10">
           <div>
-            <h4 className="font-bold text-neutral-900 dark:text-neutral-100 mb-6 text-lg font-montserrat">Équipements Inclus</h4>
+            <h4 className="font-bold text-gray-900 mb-6 text-lg">Équipements Inclus</h4>
             <div className="space-y-3">
               {spaceInfo.features.map((feature, index) => (
                 <div key={index} className="flex items-center space-x-3">
-                  <CheckCircle className="w-6 h-6 text-secondary flex-shrink-0" />
-                  <span className="text-neutral-600 dark:text-neutral-300">{feature}</span>
+                  <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0" />
+                  <span className="text-gray-600">{feature}</span>
                 </div>
               ))}
             </div>
           </div>
 
           <div>
-            <h4 className="font-bold text-neutral-900 dark:text-neutral-100 mb-6 text-lg font-montserrat">Tarifs</h4>
-            <div className="space-y-3 bg-secondary/5 dark:bg-neutral-700 p-6 rounded-xl border border-secondary/20">
+            <h4 className="font-bold text-gray-900 mb-6 text-lg">Tarifs</h4>
+            <div className="space-y-3 bg-gray-50 p-6 rounded-xl border border-gray-200">
               {spaceInfo.dailyPrice && (
                 <div className="flex justify-between items-center">
-                  <span className="text-neutral-600 dark:text-neutral-300">Journalier:</span>
-                  <span className="font-bold text-secondary dark:text-neutral-200 text-lg font-montserrat">${spaceInfo.dailyPrice}</span>
+                  <span className="text-gray-600">Journalier:</span>
+                  <span className="font-bold text-blue-600 text-lg">${spaceInfo.dailyPrice}</span>
                 </div>
               )}
               {spaceInfo.monthlyPrice && (
                 <div className="flex justify-between items-center">
-                  <span className="text-neutral-600 dark:text-neutral-300">Mensuel:</span>
-                  <span className="font-bold text-accent dark:text-neutral-200 text-lg font-montserrat">${spaceInfo.monthlyPrice}</span>
+                  <span className="text-gray-600">Mensuel:</span>
+                  <span className="font-bold text-blue-600 text-lg">${spaceInfo.monthlyPrice}</span>
                 </div>
               )}
               {spaceInfo.yearlyPrice && (
                 <div className="flex justify-between items-center">
-                  <span className="text-neutral-600 dark:text-neutral-300">Annuel:</span>
-                  <span className="font-bold text-success dark:text-neutral-200 text-lg font-montserrat">${spaceInfo.yearlyPrice}</span>
+                  <span className="text-gray-600">Annuel:</span>
+                  <span className="font-bold text-blue-600 text-lg">${spaceInfo.yearlyPrice}</span>
                 </div>
               )}
               {spaceInfo.hourlyPrice && (
                 <div className="flex justify-between items-center">
-                  <span className="text-neutral-600 dark:text-neutral-300">Horaire:</span>
-                  <span className="font-bold text-warning dark:text-neutral-200 text-lg font-montserrat">${spaceInfo.hourlyPrice}</span>
+                  <span className="text-gray-600">Horaire:</span>
+                  <span className="font-bold text-blue-600 text-lg">${spaceInfo.hourlyPrice}</span>
                 </div>
               )}
             </div>
@@ -473,105 +473,105 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-8 border border-neutral-200 dark:border-neutral-700">
-        <h4 className="font-bold text-neutral-900 dark:text-neutral-100 mb-6 text-xl text-center font-montserrat">Sélectionner les Dates</h4>
-        <div className="flex justify-center bg-secondary/5 dark:bg-neutral-700 p-6 rounded-xl border border-secondary/20">
+      <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <h4 className="font-bold text-gray-900 mb-6 text-xl text-center">Sélectionner les Dates</h4>
+        <div className="flex justify-center bg-gray-50 p-6 rounded-xl border border-gray-200">
           <ReactCalendar
             onChange={setSelectedDates}
             selectRange={true}
             value={selectedDates}
             minDate={new Date()}
-            className="rounded-xl border-2 border-secondary/20 dark:border-neutral-600 shadow-lg"
+            className="rounded-xl border-2 border-blue-200 shadow-lg"
           />
         </div>
         {!selectedDates && (
-          <p className="text-danger mt-4 text-center font-medium">{t.validation.selectDates}</p>
+          <p className="text-red-600 mt-4 text-center font-medium">{t.validation.selectDates}</p>
         )}
       </div>
     </div>
   );
 
   const renderStep2 = () => (
-    <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-8 border border-neutral-200 dark:border-neutral-700">
-      <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-8 text-center font-montserrat">Informations Personnelles</h3>
+    <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+      <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Informations Personnelles</h3>
       <div className="grid md:grid-cols-2 gap-6">
-      <div>
-        <label htmlFor="fullName" className="block text-sm font-semibold text-neutral-600 dark:text-neutral-300 mb-2">
-          {t.form.fullName} *
-        </label>
-        <input
-          type="text"
-          name="fullName"
-          id="fullName"
-          value={formData.fullName}
-          onChange={handleInputChange}
-          className="block w-full rounded-xl border-2 border-secondary/20 dark:border-neutral-600 px-4 py-3 shadow-sm focus:border-secondary focus:ring-2 focus:ring-secondary/20 dark:bg-neutral-700 dark:text-neutral-100 transition-all duration-300"
-          required
-        />
+        <div>
+          <label htmlFor="fullName" className="block text-sm font-semibold text-gray-600 mb-2">
+            {t.form.fullName} *
+          </label>
+          <input
+            type="text"
+            name="fullName"
+            id="fullName"
+            value={formData.fullName}
+            onChange={handleInputChange}
+            className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="activity" className="block text-sm font-semibold text-gray-600 mb-2">
+            {t.form.activity} *
+          </label>
+          <input
+            type="text"
+            name="activity"
+            id="activity"
+            value={formData.activity}
+            onChange={handleInputChange}
+            className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="company" className="block text-sm font-semibold text-gray-600 mb-2">
+            {t.form.company}
+          </label>
+          <input
+            type="text"
+            name="company"
+            id="company"
+            value={formData.company}
+            onChange={handleInputChange}
+            className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="phone" className="block text-sm font-semibold text-gray-600 mb-2">
+            {t.form.phone} *
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            id="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+            required
+          />
+        </div>
+
+        <div className="md:col-span-2">
+          <label htmlFor="email" className="block text-sm font-semibold text-gray-600 mb-2">
+            {t.form.email} *
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+            required
+          />
+        </div>
       </div>
 
-      <div>
-        <label htmlFor="activity" className="block text-sm font-semibold text-neutral-600 dark:text-neutral-300 mb-2">
-          {t.form.activity} *
-        </label>
-        <input
-          type="text"
-          name="activity"
-          id="activity"
-          value={formData.activity}
-          onChange={handleInputChange}
-          className="block w-full rounded-xl border-2 border-secondary/20 dark:border-neutral-600 px-4 py-3 shadow-sm focus:border-secondary focus:ring-2 focus:ring-secondary/20 dark:bg-neutral-700 dark:text-neutral-100 transition-all duration-300"
-          required
-        />
-      </div>
-
-      <div>
-        <label htmlFor="company" className="block text-sm font-semibold text-neutral-600 dark:text-neutral-300 mb-2">
-          {t.form.company}
-        </label>
-        <input
-          type="text"
-          name="company"
-          id="company"
-          value={formData.company}
-          onChange={handleInputChange}
-          className="block w-full rounded-xl border-2 border-secondary/20 dark:border-neutral-600 px-4 py-3 shadow-sm focus:border-secondary focus:ring-2 focus:ring-secondary/20 dark:bg-neutral-700 dark:text-neutral-100 transition-all duration-300"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="phone" className="block text-sm font-semibold text-neutral-600 dark:text-neutral-300 mb-2">
-          {t.form.phone} *
-        </label>
-        <input
-          type="tel"
-          name="phone"
-          id="phone"
-          value={formData.phone}
-          onChange={handleInputChange}
-          className="block w-full rounded-xl border-2 border-secondary/20 dark:border-neutral-600 px-4 py-3 shadow-sm focus:border-secondary focus:ring-2 focus:ring-secondary/20 dark:bg-neutral-700 dark:text-neutral-100 transition-all duration-300"
-          required
-        />
-      </div>
-
-      <div>
-        <label htmlFor="email" className="block text-sm font-semibold text-neutral-600 dark:text-neutral-300 mb-2">
-          {t.form.email} *
-        </label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          className="block w-full rounded-xl border-2 border-secondary/20 dark:border-neutral-600 px-4 py-3 shadow-sm focus:border-secondary focus:ring-2 focus:ring-secondary/20 dark:bg-neutral-700 dark:text-neutral-100 transition-all duration-300"
-          required
-        />
-      </div>
-      </div>
-
-      <div>
-        <label htmlFor="address" className="block text-sm font-semibold text-neutral-600 dark:text-neutral-300 mb-2">
+      <div className="mt-6">
+        <label htmlFor="address" className="block text-sm font-semibold text-gray-600 mb-2">
           {t.form.address}
         </label>
         <textarea
@@ -580,14 +580,14 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
           rows={3}
           value={formData.address}
           onChange={handleInputChange}
-          className="block w-full rounded-xl border-2 border-secondary/20 dark:border-neutral-600 px-4 py-3 shadow-sm focus:border-secondary focus:ring-2 focus:ring-secondary/20 dark:bg-neutral-700 dark:text-neutral-100 transition-all duration-300"
+          className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
         />
       </div>
 
       {spaceType !== 'salle-reunion' && (
-        <div className="grid md:grid-cols-2 gap-6 pt-6 border-t border-secondary/20 dark:border-neutral-600">
+        <div className="grid md:grid-cols-2 gap-6 pt-6 border-t border-gray-200 mt-6">
           <div>
-            <label htmlFor="occupants" className="block text-sm font-semibold text-neutral-600 dark:text-neutral-300 mb-2">
+            <label htmlFor="occupants" className="block text-sm font-semibold text-gray-600 mb-2">
               {t.form.occupants}
             </label>
             <input
@@ -598,15 +598,15 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
               id="occupants"
               value={formData.occupants}
               onChange={handleInputChange}
-              className="block w-full rounded-xl border-2 border-secondary/20 dark:border-neutral-600 px-4 py-3 shadow-sm focus:border-secondary focus:ring-2 focus:ring-secondary/20 dark:bg-neutral-700 dark:text-neutral-100 transition-all duration-300"
+              className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
             />
             {formData.occupants > spaceInfo.maxOccupants && (
-              <p className="text-danger mt-2 font-medium">{t.validation.maxOccupants}</p>
+              <p className="text-red-600 mt-2 font-medium">{t.validation.maxOccupants}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="subscriptionType" className="block text-sm font-semibold text-neutral-600 dark:text-neutral-300 mb-2">
+            <label htmlFor="subscriptionType" className="block text-sm font-semibold text-gray-600 mb-2">
               {t.form.subscriptionType}
             </label>
             <select
@@ -615,14 +615,14 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
               value={formData.subscriptionType}
               onChange={handleInputChange}
               disabled={spaceType === 'bureau-prive'}
-              className="block w-full rounded-xl border-2 border-secondary/20 dark:border-neutral-600 px-4 py-3 shadow-sm focus:border-secondary focus:ring-2 focus:ring-secondary/20 dark:bg-neutral-700 dark:text-neutral-100 transition-all duration-300"
+              className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
             >
               <option value="daily">{t.form.daily}</option>
               <option value="monthly">{t.form.monthly}</option>
               <option value="yearly">{t.form.yearly}</option>
             </select>
             {spaceType === 'bureau-prive' && (
-              <p className="mt-2 text-sm italic text-neutral-600 dark:text-neutral-400 bg-warning/10 dark:bg-warning/20 p-3 rounded-lg">
+              <p className="mt-2 text-sm italic text-gray-600 bg-orange-50 p-3 rounded-lg">
                 {language === 'fr'
                   ? "Pour les bureaux privés, seul l'abonnement mensuel est disponible."
                   : "For private offices, only monthly subscription is available."}
@@ -638,34 +638,34 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
     const total = calculateTotal();
 
     return (
-      <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-8 border border-neutral-200 dark:border-neutral-700">
-        <h2 className="text-2xl font-bold mb-8 text-center text-neutral-900 dark:text-neutral-100 font-montserrat">{t.payment.title}</h2>
+      <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <h2 className="text-2xl font-bold mb-8 text-center text-gray-900">{t.payment.title}</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Mobile Money Button */}
           <button
             type="button"
             onClick={() => setPaymentMethod('mobileMoney')}
-            className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-200 ${
+            className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-200 ${
               paymentMethod === 'mobileMoney'
-                ? 'bg-gradient-to-br from-secondary to-accent text-white shadow-2xl ring-4 ring-secondary/20'
-                : 'bg-secondary/5 dark:bg-neutral-700 border-2 border-neutral-200 dark:border-neutral-600 text-secondary dark:text-neutral-300 hover:border-accent hover:shadow-xl'
+                ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-2xl ring-4 ring-orange-200'
+                : 'bg-white border-2 border-gray-200 text-orange-600 hover:border-orange-300 hover:shadow-xl'
             }`}
           >
             <div className="flex flex-col items-center space-y-4">
               <div className={`p-3 rounded-full transition-colors ${
                 paymentMethod === 'mobileMoney'
                   ? 'bg-white/20'
-                  : 'bg-secondary/10 dark:bg-accent/50 group-hover:bg-neutral-200'
+                  : 'bg-orange-100 group-hover:bg-orange-200'
               }`}>
                 <Smartphone className={`w-10 h-10 ${
-                  paymentMethod === 'mobileMoney' ? 'text-white' : 'text-secondary'
+                  paymentMethod === 'mobileMoney' ? 'text-white' : 'text-orange-600'
                 }`} />
               </div>
               <div className="text-center">
-                <h3 className="font-bold text-xl font-montserrat">{t.payment.mobileMoney}</h3>
+                <h3 className="font-bold text-xl">{t.payment.mobileMoney}</h3>
                 <p className={`text-sm mt-2 ${
-                  paymentMethod === 'mobileMoney' ? 'text-white/80' : 'text-neutral-500'
+                  paymentMethod === 'mobileMoney' ? 'text-white/80' : 'text-gray-500'
                 }`}>
                   {language === 'fr' ? 'Orange Money, Airtel Money' : 'Orange Money, Airtel Money'}
                 </p>
@@ -674,7 +674,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             {paymentMethod === 'mobileMoney' && (
               <div className="absolute top-3 right-3">
                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-                  <CheckCircle className="w-5 h-5 text-secondary" />
+                  <CheckCircle className="w-5 h-5 text-orange-600" />
                 </div>
               </div>
             )}
@@ -686,24 +686,24 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             onClick={() => setPaymentMethod('visa')}
             className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-200 ${
               paymentMethod === 'visa'
-                ? 'bg-gradient-to-br from-success to-secondary text-white shadow-2xl ring-4 ring-success/20'
-                : 'bg-success/5 dark:bg-neutral-700 border-2 border-neutral-200 dark:border-neutral-600 text-success dark:text-neutral-300 hover:border-secondary hover:shadow-xl'
+                ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-2xl ring-4 ring-blue-200'
+                : 'bg-white border-2 border-gray-200 text-blue-600 hover:border-blue-300 hover:shadow-xl'
             }`}
           >
             <div className="flex flex-col items-center space-y-4">
               <div className={`p-3 rounded-full transition-colors ${
                 paymentMethod === 'visa'
                   ? 'bg-white/20'
-                  : 'bg-success/10 dark:bg-secondary/50 group-hover:bg-neutral-200'
+                  : 'bg-blue-100 group-hover:bg-blue-200'
               }`}>
                 <CreditCard className={`w-10 h-10 ${
-                  paymentMethod === 'visa' ? 'text-white' : 'text-success'
+                  paymentMethod === 'visa' ? 'text-white' : 'text-blue-600'
                 }`} />
               </div>
               <div className="text-center">
-                <h3 className="font-bold text-xl font-montserrat">{t.payment.visa}</h3>
+                <h3 className="font-bold text-xl">{t.payment.visa}</h3>
                 <p className={`text-sm mt-2 ${
-                  paymentMethod === 'visa' ? 'text-white/80' : 'text-neutral-500'
+                  paymentMethod === 'visa' ? 'text-white/80' : 'text-gray-500'
                 }`}>
                   {language === 'fr' ? 'Visa, Mastercard' : 'Visa, Mastercard'}
                 </p>
@@ -712,7 +712,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             {paymentMethod === 'visa' && (
               <div className="absolute top-3 right-3">
                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-                  <CheckCircle className="w-5 h-5 text-success" />
+                  <CheckCircle className="w-5 h-5 text-blue-600" />
                 </div>
               </div>
             )}
@@ -722,26 +722,26 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
           <button
             type="button"
             onClick={() => setPaymentMethod('cash')}
-            className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-200 ${
+            className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-200 ${
               paymentMethod === 'cash'
-                ? 'bg-gradient-to-br from-warning to-danger text-white shadow-2xl ring-4 ring-warning/20'
-                : 'bg-warning/5 dark:bg-neutral-700 border-2 border-neutral-200 dark:border-neutral-600 text-warning dark:text-neutral-300 hover:border-danger hover:shadow-xl'
+                ? 'bg-gradient-to-br from-green-600 to-green-700 text-white shadow-2xl ring-4 ring-green-200'
+                : 'bg-white border-2 border-gray-200 text-green-600 hover:border-green-300 hover:shadow-xl'
             }`}
           >
             <div className="flex flex-col items-center space-y-4">
               <div className={`p-3 rounded-full transition-colors ${
                 paymentMethod === 'cash'
                   ? 'bg-white/20'
-                  : 'bg-warning/10 dark:bg-danger/50 group-hover:bg-neutral-200'
+                  : 'bg-green-100 group-hover:bg-green-200'
               }`}>
                 <Banknote className={`w-10 h-10 ${
-                  paymentMethod === 'cash' ? 'text-white' : 'text-warning'
+                  paymentMethod === 'cash' ? 'text-white' : 'text-green-600'
                 }`} />
               </div>
               <div className="text-center">
-                <h3 className="font-bold text-xl font-montserrat">{t.payment.cash}</h3>
+                <h3 className="font-bold text-xl">{t.payment.cash}</h3>
                 <p className={`text-sm mt-2 ${
-                  paymentMethod === 'cash' ? 'text-white/80' : 'text-neutral-500'
+                  paymentMethod === 'cash' ? 'text-white/80' : 'text-gray-500'
                 }`}>
                   {language === 'fr' ? 'Paiement sur place' : 'Pay on-site'}
                 </p>
@@ -750,7 +750,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             {paymentMethod === 'cash' && (
               <div className="absolute top-3 right-3">
                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-                  <CheckCircle className="w-5 h-5 text-warning" />
+                  <CheckCircle className="w-5 h-5 text-green-600" />
                 </div>
               </div>
             )}
@@ -758,79 +758,78 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
         </div>
 
         {paymentMethod === 'cash' && (
-          <div className="mt-6 p-4 bg-warning/10 dark:bg-warning/20 border border-warning/20 dark:border-warning/30 rounded-xl">
-            <p className="text-warning dark:text-neutral-300 text-center font-medium">
-            {language === 'fr'
-              ? "Vous avez choisi de payer en espèces. Merci de régler sur place lors de votre arrivée."
-              : "You have chosen to pay cash. Please pay on-site upon arrival."}
+          <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
+            <p className="text-green-700 text-center font-medium">
+              {language === 'fr'
+                ? "Vous avez choisi de payer en espèces. Merci de régler sur place lors de votre arrivée."
+                : "You have chosen to pay cash. Please pay on-site upon arrival."}
             </p>
           </div>
         )}
 
-        <div className="mt-8 p-6 bg-gradient-to-r from-secondary/5 to-accent/5 dark:from-secondary/20 dark:to-accent/20 rounded-xl border border-secondary/20 dark:border-accent/30">
+        <div className="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
           <div className="text-center">
-            <p className="text-neutral-600 dark:text-neutral-300 mb-2">Total à payer</p>
-            <p className="text-3xl font-bold text-secondary dark:text-neutral-100 font-montserrat">
-          {t.payment.total}: ${total}
+            <p className="text-gray-600 mb-2">Total à payer</p>
+            <p className="text-3xl font-bold text-blue-600">
+              {t.payment.total}: ${total}
             </p>
           </div>
         </div>
 
         {paymentError && (
-          <div className="mt-6 p-4 bg-danger/10 dark:bg-danger/20 border border-danger/20 dark:border-danger/30 rounded-xl">
-            <p className="text-danger dark:text-danger font-semibold text-center">{t.payment.error + paymentError}</p>
+          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+            <p className="text-red-700 font-semibold text-center">{t.payment.error + paymentError}</p>
           </div>
         )}
 
         {reservationError && (
-          <div className="mt-6 p-4 bg-danger/10 dark:bg-danger/20 border border-danger/20 dark:border-danger/30 rounded-xl">
-            <p className="text-danger dark:text-danger font-semibold text-center">Erreur: {reservationError}</p>
+          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+            <p className="text-red-700 font-semibold text-center">Erreur: {reservationError}</p>
           </div>
         )}
 
         {paymentProcessing && (
-          <div className="mt-6 p-4 bg-secondary/10 dark:bg-secondary/20 border border-secondary/20 dark:border-secondary/30 rounded-xl">
-            <p className="text-secondary dark:text-neutral-300 text-center font-medium">{t.payment.processing}</p>
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+            <p className="text-blue-700 text-center font-medium">{t.payment.processing}</p>
           </div>
         )}
         {checkingPayment && (
-          <div className="mt-4 p-4 bg-warning/10 dark:bg-warning/20 border border-warning/20 dark:border-warning/30 rounded-xl">
-            <p className="text-warning dark:text-warning text-center font-medium">{t.payment.checking}</p>
+          <div className="mt-4 p-4 bg-orange-50 border border-orange-200 rounded-xl">
+            <p className="text-orange-700 text-center font-medium">{t.payment.checking}</p>
           </div>
         )}
-
       </div>
     );
   };
 
   const renderStep4 = () => (
-    <div className="text-center space-y-8 p-12 bg-gradient-to-br from-success/5 to-secondary/5 dark:from-success/20 dark:to-secondary/20 rounded-2xl shadow-2xl border-2 border-success/20 dark:border-secondary/30">
+    <div className="text-center space-y-8 p-12 bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl shadow-2xl border-2 border-green-200">
       <div className="relative">
-        <div className="absolute inset-0 bg-success/20 dark:bg-secondary/30 rounded-full blur-xl"></div>
-        <CheckCircle className="relative mx-auto w-24 h-24 text-success" />
+        <div className="absolute inset-0 bg-green-200 rounded-full blur-xl opacity-30"></div>
+        <CheckCircle className="relative mx-auto w-24 h-24 text-green-500" />
       </div>
-      <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 font-montserrat">{t.success.title}</h2>
-      <p className="text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto leading-relaxed">{t.success.message}</p>
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900">{t.success.title}</h2>
+      <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">{t.success.message}</p>
       
       {emailSent && (
-        <div className="bg-success/10 dark:bg-success/30 border border-success/20 dark:border-success/30 rounded-xl p-6">
-          <p className="text-success dark:text-neutral-300 font-medium">
+        <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+          <p className="text-green-700 font-medium">
             ✅ Email de confirmation envoyé avec succès
           </p>
         </div>
       )}
       
       {!emailSent && (
-        <div className="bg-warning/10 dark:bg-warning/30 border border-warning/20 dark:border-warning/30 rounded-xl p-6">
-          <p className="text-warning dark:text-warning font-medium">
+        <div className="bg-orange-50 border border-orange-200 rounded-xl p-6">
+          <p className="text-orange-700 font-medium">
             ⚠️ Réservation confirmée, mais email non envoyé
           </p>
         </div>
       )}
       
-      <div className="bg-white dark:bg-neutral-800 p-6 rounded-xl border border-neutral-200 dark:border-neutral-700">
-        <p className="text-neutral-600 dark:text-neutral-300 mb-2">Référence de votre réservation</p>
-        <p className="text-xl font-bold text-secondary dark:text-neutral-100 font-mono">{transactionId}</p>
+      <div className="bg-white p-6 rounded-xl border border-gray-200">
+        <p className="text-gray-600 mb-2">Référence de votre réservation</p>
+        <p className="text-xl font-bold text-blue-600 font-mono">{transactionId}</p>
       </div>
 
       <button
@@ -858,7 +857,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
           setCheckingPayment(false);
           setPaymentWindow(null);
         }}
-        className="px-8 py-4 bg-gradient-to-r from-secondary to-accent text-white rounded-xl hover:from-accent hover:to-secondary transition-all duration-300 font-semibold text-lg shadow-lg transform hover:scale-105"
+        className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-semibold text-lg shadow-lg transform hover:scale-105"
       >
         {t.buttons.newReservation}
       </button>
@@ -866,72 +865,72 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
   );
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-sky-light-400 via-sky-light-500 to-sky-light-600 font-poppins">
+    <main className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
         <div className="text-center mb-12 pt-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-sky-light-500 to-sky-light-600 bg-clip-text text-transparent font-montserrat">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
             {t.title}
           </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-sky-light-500 to-sky-light-600 mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-blue-700 mx-auto rounded-full"></div>
         </div>
 
-      {renderStepIndicator()}
+        {renderStepIndicator()}
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (currentStep === 3) {
-            handleReservation();
-          } else {
-            nextStep();
-          }
-        }}
-      >
-        {currentStep === 1 && renderStep1()}
-        {currentStep === 2 && renderStep2()}
-        {currentStep === 3 && renderStep3()}
-        {currentStep === 4 && renderStep4()}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (currentStep === 3) {
+              handleReservation();
+            } else {
+              nextStep();
+            }
+          }}
+        >
+          {currentStep === 1 && renderStep1()}
+          {currentStep === 2 && renderStep2()}
+          {currentStep === 3 && renderStep3()}
+          {currentStep === 4 && renderStep4()}
 
-        {currentStep !== 4 && (
-          <div className="mt-12 flex justify-between items-center bg-white dark:bg-neutral-800 p-6 rounded-2xl shadow-lg border border-secondary/20 dark:border-neutral-700">
-            {currentStep > 1 && (
-              <button
-                type="button"
-                onClick={prevStep}
-                className="px-6 py-3 bg-secondary/5 dark:bg-neutral-700 text-secondary dark:text-neutral-300 rounded-xl hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-all duration-300 font-medium"
-                disabled={paymentProcessing}
-              >
-                {t.buttons.previous}
-              </button>
-            )}
-            
-            {currentStep !== 3 && (
-              <button
-                type="submit"
-                className="px-8 py-3 bg-gradient-to-r from-secondary to-accent text-white rounded-xl hover:from-accent hover:to-secondary ml-auto disabled:opacity-50 transition-all duration-300 font-semibold shadow-lg transform hover:scale-105"
-                disabled={!validateStep(currentStep)}
-              >
-                {t.buttons.next}
-              </button>
-            )}
-            
-            {currentStep === 3 && (
-              <button
-                type="button"
-                onClick={handleReservation}
-                className="px-8 py-3 bg-gradient-to-r from-secondary to-accent text-white rounded-xl hover:from-accent hover:to-secondary ml-auto disabled:opacity-50 transition-all duration-300 font-semibold shadow-lg transform hover:scale-105"
-                disabled={paymentProcessing || !paymentMethod}
-              >
-                {paymentProcessing ? 
-                  (language === 'fr' ? 'Traitement...' : 'Processing...') : 
-                  (paymentMethod === 'cash' ? t.buttons.reserve : t.buttons.pay)
-                }
-              </button>
-            )}
-          </div>
-        )}
-      </form>
+          {currentStep !== 4 && (
+            <div className="mt-12 flex justify-between items-center bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
+              {currentStep > 1 && (
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-all duration-300 font-medium"
+                  disabled={paymentProcessing}
+                >
+                  {t.buttons.previous}
+                </button>
+              )}
+              
+              {currentStep !== 3 && (
+                <button
+                  type="submit"
+                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 ml-auto disabled:opacity-50 transition-all duration-300 font-semibold shadow-lg transform hover:scale-105"
+                  disabled={!validateStep(currentStep)}
+                >
+                  {t.buttons.next}
+                </button>
+              )}
+              
+              {currentStep === 3 && (
+                <button
+                  type="button"
+                  onClick={handleReservation}
+                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 ml-auto disabled:opacity-50 transition-all duration-300 font-semibold shadow-lg transform hover:scale-105"
+                  disabled={paymentProcessing || !paymentMethod}
+                >
+                  {paymentProcessing ? 
+                    (language === 'fr' ? 'Traitement...' : 'Processing...') : 
+                    (paymentMethod === 'cash' ? t.buttons.reserve : t.buttons.pay)
+                  }
+                </button>
+              )}
+            </div>
+          )}
+        </form>
       </div>
     </main>
   );
