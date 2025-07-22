@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ language, setLanguage, isAuthenticated,
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <img 
-              src="/logo.jpg" 
+              src="/Logo N'zoo Immo (header du site, Width=200px).svg" 
               alt="Nzoo Immo" 
               className="h-16 w-auto object-contain"
               onError={(e) => {
