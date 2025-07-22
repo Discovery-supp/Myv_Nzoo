@@ -28,7 +28,6 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
   });
   const [newFeature, setNewFeature] = useState('');
   const [newImage, setNewImage] = useState('');
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const translations = {
     fr: {
@@ -164,7 +163,6 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
     setEditingSpace(null);
     setNewFeature('');
     setNewImage('');
-    setSelectedFiles([]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -239,26 +237,21 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    setSelectedFiles(files);
-    
-    // Convertir les fichiers en base64 pour l'aperçu
-    files.forEach(file => {
-      if (file.type.startsWith('image/')) {
+    const files = e.target.files;
+    if (files) {
+      Array.from(files).forEach(file => {
         const reader = new FileReader();
         reader.onload = (event) => {
-          const base64String = event.target?.result as string;
-          setFormData(prev => ({
-            ...prev,
-            images: [...prev.images, base64String]
-          }));
+          if (event.target?.result) {
+            setFormData(prev => ({
+              ...prev,
+              images: [...prev.images, event.target!.result as string]
+            }));
+          }
         };
         reader.readAsDataURL(file);
-      }
-    });
-    
-    // Réinitialiser l'input file
-    e.target.value = '';
+      });
+    }
   };
 
   if (loading) {
@@ -622,24 +615,6 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       {formData.images.map((image, index) => (
                         <div key={index} className="relative group">
-                      <input
-                        type="url"
-                        value={newImage}
-                        onChange={(e) => setNewImage(e.target.value)}
-                        placeholder="URL de l'image..."
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                      <button
-                        type="button"
-                        onClick={addImage}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                      >
-                        {t.actions.addImage}
-                      </button>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {formData.images.map((image, index) => (
-                        <div key={index} className="relative">
                           <img
                             src={image.startsWith('data:') ? image : image}
                             alt={`Image ${index + 1}`}
