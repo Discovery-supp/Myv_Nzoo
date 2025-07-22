@@ -160,12 +160,8 @@ const HomePage: React.FC = () => {
             onClick={toggleDark}
             className="p-2 rounded-full bg-nzoo-light dark:bg-nzoo-secondary hover:scale-105 transition"
             aria-label="Toggle dark mode"
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentBannerIndex 
-                  ? 'bg-blue-600 shadow-lg' 
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-            )}
+          >
+            {darkMode ? <Sun className="w-5 h-5 text-yellow-500" /> : <Moon className="w-5 h-5 text-gray-700" />}
           </button>
         </div>
 
