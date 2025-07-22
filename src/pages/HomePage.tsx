@@ -212,87 +212,104 @@ const HomePage: React.FC = () => {
           </div>
         </section>
         {/* Hero Section */}
-        <section className="relative flex items-center justify-center min-h-[60vh] bg-white dark:bg-gray-900">
+        <section className="relative flex items-center justify-center min-h-[60vh] bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="text-center text-gray-900 dark:text-gray-100 px-4 max-w-4xl"
+            className="text-center text-gray-900 dark:text-gray-100 px-4 max-w-5xl"
           >
-            <h1 className="text-5xl font-bold leading-tight mb-6">{t.hero.title}</h1>
-            <p className="text-xl mb-8 opacity-90">{t.hero.subtitle}</p>
-            <div className="flex justify-center">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-8 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              {t.hero.title}
+            </h1>
+            <p className="text-xl md:text-2xl mb-12 text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+              {t.hero.subtitle}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={goToSpaces}
-                className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg shadow-lg transition-colors"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 px-8 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105 font-semibold text-lg"
               >
                 {t.hero.ctaPrimary}
+              </button>
+              <button
+                onClick={() => window.scrollTo({ top: document.querySelector('#services')?.offsetTop, behavior: 'smooth' })}
+                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white py-4 px-8 rounded-xl transition-all duration-300 font-semibold text-lg"
+              >
+                Découvrir nos services
               </button>
             </div>
           </motion.div>
         </section>
 
         {/* Services Section */}
-        <section className="py-20 bg-white dark:bg-gray-800">
+        <section id="services" className="py-24 bg-white dark:bg-gray-800 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-purple-50/30 dark:from-blue-900/10 dark:to-purple-900/10"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-green-200/20 to-blue-200/20 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+          
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-16"
+              className="text-center mb-20 relative z-10"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-6">
                 Nos Services
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-6 rounded-full"></div>
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
                 Découvrez nos packs adaptés à tous vos besoins professionnels
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-12 relative z-10">
               {/* Pack Startup & Freelance */}
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-xl p-8 border border-blue-200 dark:border-blue-700 hover:shadow-lg transition-all duration-300"
+                className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/50 dark:to-blue-800/50 rounded-2xl p-8 border border-blue-200/50 dark:border-blue-700/50 hover:shadow-2xl hover:scale-105 transition-all duration-500 backdrop-blur-sm"
               >
-                <div className="flex items-center mb-6">
-                 <div className="bg-blue-600 p-4 rounded-lg mr-6 flex-shrink-0">
+                <div className="flex items-center mb-8">
+                 <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
                    <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Startup" className="w-20 h-16 object-cover rounded-lg" />
                   </div>
-                  <h3 className="text-xl font-bold text-blue-800 dark:text-blue-200">
+                  <h3 className="text-2xl font-bold text-blue-800 dark:text-blue-200">
                     PACK STARTUP & FREE-LANCE
                   </h3>
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                <p className="text-gray-700 dark:text-gray-300 mb-6 text-lg leading-relaxed">
                   Destiné aux startups, freelances, télétravailleurs et professionnels à la recherche d'un espace flexible, accessible et stimulant.
                 </p>
-                <div className="mb-4">
-                  <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">$300/mois</span>
-                  <span className="text-gray-600 dark:text-gray-400 ml-2">ou $15/jour</span>
+                <div className="mb-6 p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl">
+                  <span className="text-3xl font-bold text-blue-600 dark:text-blue-400">$300</span>
+                  <span className="text-gray-600 dark:text-gray-400 ml-2 text-lg">/mois</span>
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">ou $15/jour</div>
                 </div>
-                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <ul className="space-y-3 text-gray-600 dark:text-gray-400">
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-blue-500 rounded-full mr-3 flex-shrink-0"></span>
                     Accès à un poste de travail en open space
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-blue-500 rounded-full mr-3 flex-shrink-0"></span>
                     Connexion Internet haut débit
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-blue-500 rounded-full mr-3 flex-shrink-0"></span>
                     Accès à l'espace détente (café/thé en option)
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-blue-500 rounded-full mr-3 flex-shrink-0"></span>
                     2h gratuites de salles de réunion/semaine
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-blue-500 rounded-full mr-3 flex-shrink-0"></span>
                     Réception de courrier professionnel
                   </li>
                 </ul>
@@ -304,41 +321,42 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-xl p-8 border border-green-200 dark:border-green-700 hover:shadow-lg transition-all duration-300"
+                className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/50 dark:to-green-800/50 rounded-2xl p-8 border border-green-200/50 dark:border-green-700/50 hover:shadow-2xl hover:scale-105 transition-all duration-500 backdrop-blur-sm"
               >
-                <div className="flex items-center mb-6">
-                 <div className="bg-green-600 p-4 rounded-lg mr-6 flex-shrink-0">
+                <div className="flex items-center mb-8">
+                 <div className="bg-gradient-to-br from-green-600 to-green-700 p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
                    <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Welcome" className="w-20 h-16 object-cover rounded-lg" />
                   </div>
-                  <h3 className="text-xl font-bold text-green-800 dark:text-green-200">
+                  <h3 className="text-2xl font-bold text-green-800 dark:text-green-200">
                     PACK WELCOME TO KIN
                   </h3>
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                <p className="text-gray-700 dark:text-gray-300 mb-6 text-lg leading-relaxed">
                   Destiné aux entrepreneurs étrangers, membres de la diaspora et professionnels internationaux souhaitant s'implanter à Kinshasa.
                 </p>
-                <div className="mb-4">
-                  <span className="text-2xl font-bold text-green-600 dark:text-green-400">$1000/mois</span>
+                <div className="mb-6 p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl">
+                  <span className="text-3xl font-bold text-green-600 dark:text-green-400">$1000</span>
+                  <span className="text-gray-600 dark:text-gray-400 ml-2 text-lg">/mois</span>
                 </div>
-                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <ul className="space-y-3 text-gray-600 dark:text-gray-400">
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-green-500 rounded-full mr-3 flex-shrink-0"></span>
                     Accès à un poste de travail en open space
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-green-500 rounded-full mr-3 flex-shrink-0"></span>
                     Hébergement studio meublé à proximité
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-green-500 rounded-full mr-3 flex-shrink-0"></span>
                     Accompagnement personnalisé à l'installation
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-green-500 rounded-full mr-3 flex-shrink-0"></span>
                     Services de secrétariat partiels
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-green-500 rounded-full mr-3 flex-shrink-0"></span>
                     Support bilingue (français/anglais)
                   </li>
                 </ul>
@@ -350,43 +368,43 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-xl p-8 border border-purple-200 dark:border-purple-700 hover:shadow-lg transition-all duration-300"
+                className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/50 dark:to-purple-800/50 rounded-2xl p-8 border border-purple-200/50 dark:border-purple-700/50 hover:shadow-2xl hover:scale-105 transition-all duration-500 backdrop-blur-sm"
               >
-                <div className="flex items-center mb-6">
-                 <div className="bg-purple-600 p-4 rounded-lg mr-6 flex-shrink-0">
+                <div className="flex items-center mb-8">
+                 <div className="bg-gradient-to-br from-purple-600 to-purple-700 p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
                    <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Investment" className="w-20 h-16 object-cover rounded-lg" />
                   </div>
-                  <h3 className="text-xl font-bold text-purple-800 dark:text-purple-200">
+                  <h3 className="text-2xl font-bold text-purple-800 dark:text-purple-200">
                     PACK INVEST LOUNGE
                   </h3>
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                <p className="text-gray-700 dark:text-gray-300 mb-6 text-lg leading-relaxed">
                   Destiné aux investisseurs et Business Angels souhaitant s'implanter ou développer une activité à Kinshasa.
                 </p>
-                <div className="mb-4">
-                  <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                <div className="mb-6 p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl">
+                  <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">
                     Sur mesure
                   </span>
                 </div>
-                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <ul className="space-y-3 text-gray-600 dark:text-gray-400">
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-purple-500 rounded-full mr-3 flex-shrink-0"></span>
                     Recherche de partenariats fiables
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-purple-500 rounded-full mr-3 flex-shrink-0"></span>
                     Facilitation des échanges locaux
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-purple-500 rounded-full mr-3 flex-shrink-0"></span>
                     Visibilité aux projets
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-purple-500 rounded-full mr-3 flex-shrink-0"></span>
                     Identification des meilleurs profils
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-purple-500 rounded-full mr-3 flex-shrink-0"></span>
                     Suivi des projets financés
                   </li>
                 </ul>
@@ -398,45 +416,46 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 rounded-xl p-8 border border-orange-200 dark:border-orange-700 hover:shadow-lg transition-all duration-300"
+                className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/50 dark:to-orange-800/50 rounded-2xl p-8 border border-orange-200/50 dark:border-orange-700/50 hover:shadow-2xl hover:scale-105 transition-all duration-500 backdrop-blur-sm"
               >
-                <div className="flex items-center mb-6">
-                 <div className="bg-orange-600 p-4 rounded-lg mr-6 flex-shrink-0">
+                <div className="flex items-center mb-8">
+                 <div className="bg-gradient-to-br from-orange-600 to-orange-700 p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
                    <img src="https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Domiciliation" className="w-20 h-16 object-cover rounded-lg" />
                   </div>
-                  <h3 className="text-xl font-bold text-orange-800 dark:text-orange-200">
+                  <h3 className="text-2xl font-bold text-orange-800 dark:text-orange-200">
                     DOMICILIATION COMMERCIALE
                   </h3>
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                <p className="text-gray-700 dark:text-gray-300 mb-6 text-lg leading-relaxed">
                   Services de domiciliation commerciale destinée aux Startups, PME, Freelances et porteurs de projets.
                 </p>
-                <div className="mb-4">
-                  <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">$800/an</span>
-                  <span className="text-gray-600 dark:text-gray-400 ml-2">ou $100/mois</span>
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                <div className="mb-6 p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl">
+                  <span className="text-3xl font-bold text-orange-600 dark:text-orange-400">$800</span>
+                  <span className="text-gray-600 dark:text-gray-400 ml-2 text-lg">/an</span>
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    ou $100/mois -
                     Min 6 mois
                   </div>
                 </div>
-                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <ul className="space-y-3 text-gray-600 dark:text-gray-400">
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-orange-500 rounded-full mr-3 flex-shrink-0"></span>
                     Adresse légale à Kinshasa
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-orange-500 rounded-full mr-3 flex-shrink-0"></span>
                     Gestion du courrier administratif
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-orange-500 rounded-full mr-3 flex-shrink-0"></span>
                     Attestation de domiciliation
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-orange-500 rounded-full mr-3 flex-shrink-0"></span>
                     Création de site vitrine
                   </li>
                   <li className="flex items-center">
-                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                    <span className="w-3 h-3 bg-orange-500 rounded-full mr-3 flex-shrink-0"></span>
                     2 jours/mois en coworking
                   </li>
                 </ul>
@@ -451,12 +470,12 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-center mt-16"
             >
-              <p className="text-gray-600 dark:text-gray-300 mb-8">
+              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
                 Besoin d'un pack personnalisé ? Contactez-nous pour une solution sur mesure.
               </p>
               <button
                 onClick={() => navigate('/spaces')}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 font-medium"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 px-10 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105 font-semibold text-lg"
               >
                 Découvrir nos espaces
               </button>
@@ -465,32 +484,52 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 bg-gray-50 dark:bg-gray-900">
+        <section className="py-24 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-900 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-green-200/20 to-blue-200/20 rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2"></div>
+          
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-gray-100 mb-16">
+            <div className="text-center mb-20 relative z-10">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-6">
               {t.featuresTitle}
-            </h2>
-            <div className="grid md:grid-cols-3 gap-12">
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"></div>
+            </div>
+            <div className="grid md:grid-cols-3 gap-12 relative z-10">
               {t.features.map(({ icon, title, desc }) => (
-                <article key={title} className="text-center">
-                  <div className="bg-blue-100 dark:bg-blue-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <motion.article 
+                  key={title} 
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="text-center bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:scale-105"
+                >
+                  <div className="bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                     {icon}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-3">{title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">{desc}</p>
-                </article>
+                  <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">{title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">{desc}</p>
+                </motion.article>
               ))}
             </div>
           </div>
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-20 bg-white dark:bg-gray-800">
+        <section className="py-24 bg-white dark:bg-gray-800 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-purple-50/30 dark:from-blue-900/10 dark:to-purple-900/10"></div>
+          
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-gray-100 mb-16">
+            <div className="text-center mb-20 relative z-10">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-6">
               {t.testimonialsTitle}
-            </h2>
-            <div className="space-y-12">
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"></div>
+            </div>
+            <div className="space-y-12 relative z-10">
               {t.testimonials.map(({ name, text }) => (
                 <motion.blockquote
                   key={name}
@@ -498,10 +537,11 @@ const HomePage: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
-                  className="bg-gray-100 dark:bg-gray-900 p-8 rounded-lg shadow-md text-gray-700 dark:text-gray-300 text-center italic"
+                  className="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-900 p-10 rounded-2xl shadow-xl text-gray-700 dark:text-gray-300 text-center relative backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50"
                 >
-                  <p>“{text}”</p>
-                  <footer className="mt-4 font-semibold text-gray-900 dark:text-gray-100">— {name}</footer>
+                  <div className="absolute top-4 left-6 text-6xl text-blue-200 dark:text-blue-800 font-serif">"</div>
+                  <p className="text-xl italic leading-relaxed mb-6 relative z-10">{text}</p>
+                  <footer className="font-semibold text-gray-900 dark:text-gray-100 text-lg">— {name}</footer>
                 </motion.blockquote>
               ))}
             </div>
@@ -509,20 +549,33 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Quick Access to Spaces */}
-        <section className="py-16 bg-white dark:bg-gray-800">
+        <section className="py-20 bg-gradient-to-br from-blue-600 to-purple-600 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/90 to-purple-600/90"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+          
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-              Découvrez nos espaces
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-8">
-              Explorez notre gamme complète d'espaces de travail modernes et équipés.
-            </p>
-            <Link
-              to="/spaces"
-              className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative z-10"
             >
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Découvrez nos espaces
+              </h2>
+              <p className="text-xl text-blue-100 mb-10 max-w-3xl mx-auto leading-relaxed">
+              Explorez notre gamme complète d'espaces de travail modernes et équipés.
+              </p>
+              <Link
+                to="/spaces"
+                className="inline-flex items-center px-10 py-4 bg-white text-blue-600 rounded-xl hover:bg-gray-100 transition-all duration-300 font-semibold text-lg shadow-xl transform hover:scale-105"
+              >
               Voir tous nos espaces
-            </Link>
+              </Link>
+            </motion.div>
           </div>
         </section>
       </div>
