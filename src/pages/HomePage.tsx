@@ -212,18 +212,12 @@ const HomePage: React.FC = () => {
           </div>
         </section>
         {/* Hero Section */}
-        <section className="relative flex items-center justify-center bg-black min-h-[80vh]">
-          <img
-            src="/coworking.jpg"
-            alt="Espace coworking Nzoo"
-            className="absolute inset-0 w-full h-full object-cover opacity-80"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        <section className="relative flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 min-h-[80vh]">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="relative z-10 text-center text-white px-4 max-w-4xl"
+            className="text-center text-white px-4 max-w-4xl"
           >
             <h1 className="text-5xl font-bold leading-tight mb-6">{t.hero.title}</h1>
             <p className="text-xl mb-8 opacity-90">{t.hero.subtitle}</p>
