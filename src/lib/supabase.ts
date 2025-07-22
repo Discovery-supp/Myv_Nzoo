@@ -6,19 +6,39 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.en
 // Check if we have valid keys (not placeholders)
 const isValidKey = (key: string) => key && !key.includes('ta_clé_publique_supabase') && key.length > 20
 
-let supabase
-
-if (!supabaseUrl || !supabaseAnonKey || !isValidKey(supabaseAnonKey)) {
-  console.warn('Missing Supabase environment variables, using fallback values')
-  // Provide a temporary fallback to prevent the error
-  const fallbackKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmeDt5aXVzZXh0YmhoeGVtd3V1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2MjQwMDAsImV4cCI6MjAwNTIwMDAwMH0.fallback'
-  
-  supabase = createClient(supabaseUrl, fallbackKey)
-} else {
-  supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Validate environment variables
+if (!supabaseUrl) {
+  throw new Error('VITE_SUPABASE_URL is required')
 }
 
-export { supabase }
+if (!supabaseAnonKey || !isValidKey(supabaseAnonKey)) {
+  console.error('❌ Invalid Supabase API key detected!')
+  console.error('Please update your .env file with a valid VITE_SUPABASE_ANON_KEY')
+  console.error('You can find your API key in your Supabase project settings under API > Project API keys > anon public')
+  
+  // Create a client that will always fail with a clear error message
+  const invalidClient = {
+    from: () => ({
+      insert: () => Promise.reject(new Error('Supabase not configured: Please set a valid VITE_SUPABASE_ANON_KEY in your environment variables')),
+      select: () => Promise.reject(new Error('Supabase not configured: Please set a valid VITE_SUPABASE_ANON_KEY in your environment variables')),
+      update: () => Promise.reject(new Error('Supabase not configured: Please set a valid VITE_SUPABASE_ANON_KEY in your environment variables')),
+      delete: () => Promise.reject(new Error('Supabase not configured: Please set a valid VITE_SUPABASE_ANON_KEY in your environment variables'))
+    }),
+    auth: {
+      signUp: () => Promise.reject(new Error('Supabase not configured: Please set a valid VITE_SUPABASE_ANON_KEY in your environment variables')),
+      signInWithPassword: () => Promise.reject(new Error('Supabase not configured: Please set a valid VITE_SUPABASE_ANON_KEY in your environment variables')),
+      signOut: () => Promise.reject(new Error('Supabase not configured: Please set a valid VITE_SUPABASE_ANON_KEY in your environment variables')),
+      getUser: () => Promise.reject(new Error('Supabase not configured: Please set a valid VITE_SUPABASE_ANON_KEY in your environment variables'))
+    }
+  }
+  
+  // Export the invalid client that will provide clear error messages
+  export { invalidClient as supabase }
+} else {
+  // Create the real Supabase client
+  const supabase = createClient(supabaseUrl, supabaseAnonKey)
+  export { supabase }
+}
 
 // Types pour la base de données
 export interface Reservation {
