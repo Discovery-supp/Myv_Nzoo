@@ -425,61 +425,58 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
 
   const renderStep1 = () => (
     <div className="space-y-10">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8 border border-gray-100 dark:border-gray-700">
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">{spaceInfo.title}</h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg leading-relaxed">{spaceInfo.description}</p>
+      <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">{spaceInfo.title}</h3>
+        <p className="text-gray-600 mb-8 text-lg leading-relaxed">{spaceInfo.description}</p>
 
         <div className="grid md:grid-cols-2 gap-10">
           <div>
-            <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-6 text-lg">Équipements Inclus</h4>
+            <h4 className="font-bold text-gray-900 mb-6 text-lg">Équipements Inclus</h4>
             <div className="space-y-3">
               {spaceInfo.features.map((feature, index) => (
                 <div key={index} className="flex items-center space-x-3">
                   <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0" />
-                  <span className="text-gray-600 dark:text-gray-300">{feature}</span>
+                  <span className="text-gray-600">{feature}</span>
                 </div>
               ))}
             </div>
           </div>
 
           <div>
-            <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-6 text-lg">Tarifs</h4>
-            <div className="space-y-3 bg-gray-50 dark:bg-gray-700 p-6 rounded-xl border border-gray-200 dark:border-gray-600">
+            <h4 className="font-bold text-gray-900 mb-6 text-lg">Tarifs</h4>
+            <div className="space-y-3 bg-gray-50 p-6 rounded-xl border border-gray-200">
               {spaceInfo.dailyPrice && (
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-300">Journalier:</span>
-                  <span className="font-bold text-blue-600 dark:text-blue-400 text-lg">${spaceInfo.dailyPrice}</span>
+                  <span className="text-gray-600">Journalier:</span>
+                  <span className="font-bold text-blue-600 text-lg">${spaceInfo.dailyPrice}</span>
                 </div>
               )}
               {spaceInfo.monthlyPrice && (
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-300">Mensuel:</span>
-                  <span className="font-bold text-blue-600 dark:text-blue-400 text-lg">${spaceInfo.monthlyPrice}</span>
+                  <span className="text-gray-600">Mensuel:</span>
+                  <span className="font-bold text-blue-600 text-lg">${spaceInfo.monthlyPrice}</span>
                 </div>
               )}
               {spaceInfo.yearlyPrice && (
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-300">Annuel:</span>
-                  <span className="font-bold text-blue-600 dark:text-blue-400 text-lg">${spaceInfo.yearlyPrice}</span>
+                  <span className="text-gray-600">Annuel:</span>
+                  <span className="font-bold text-blue-600 text-lg">${spaceInfo.yearlyPrice}</span>
                 </div>
               )}
               {spaceInfo.hourlyPrice && (
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-300">Horaire:</span>
-                  <span className="font-bold text-blue-600 dark:text-blue-400 text-lg">${spaceInfo.hourlyPrice}</span>
+                  <span className="text-gray-600">Horaire:</span>
+                  <span className="font-bold text-blue-600 text-lg">${spaceInfo.hourlyPrice}</span>
                 </div>
               )}
-            </div>
-            <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              <span className="font-medium">Capacité:</span> {spaceInfo.maxOccupants} personnes
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8 border border-gray-100 dark:border-gray-700">
-        <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-6 text-xl text-center">Sélectionner les Dates</h4>
-        <div className="flex justify-center bg-gray-50 dark:bg-gray-700 p-6 rounded-xl border border-gray-200 dark:border-gray-600">
+      <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+        <h4 className="font-bold text-gray-900 mb-6 text-xl text-center">Sélectionner les Dates</h4>
+        <div className="flex justify-center bg-gray-50 p-6 rounded-xl border border-gray-200">
           <ReactCalendar
             onChange={setSelectedDates}
             selectRange={true}
