@@ -75,28 +75,30 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         .select('*')
         .eq('username', credentials.username)
         .eq('is_active', true)
-        .single();
+        .limit(1);
 
-      if (error || !data) {
+      if (error || !data || data.length === 0) {
         setError(t.error);
         setIsLoading(false);
         return;
       }
 
+      const user = data[0];
+
       // Vérifier le mot de passe (temporaire pour le développement)
       // En production, utilisez bcrypt ou une méthode de hachage sécurisée
       const isPasswordValid = 
-        data.password_hash === `temp_${credentials.password}` || // Nouveaux utilisateurs
-        (data.username === 'admin' && credentials.password === 'admin123'); // Utilisateur par défaut
+        user.password_hash === `temp_${credentials.password}` || // Nouveaux utilisateurs
+        (user.username === 'admin' && credentials.password === 'admin123'); // Utilisateur par défaut
 
       if (isPasswordValid) {
         // Stocker les informations utilisateur dans le localStorage
         localStorage.setItem('currentUser', JSON.stringify({
-          id: data.id,
-          username: data.username,
-          email: data.email,
-          role: data.role,
-          full_name: data.full_name
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          full_name: user.full_name
         }));
         
         setIsAuthenticated(true);
