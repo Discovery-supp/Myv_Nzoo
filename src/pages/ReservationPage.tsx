@@ -424,7 +424,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
 
   const renderStep1 = () => (
     <div className="space-y-10">
-      <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 backdrop-blur-sm">
+      <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
         <h3 className="text-2xl font-bold text-gray-900 mb-6">{spaceInfo.title}</h3>
         <p className="text-gray-600 mb-8 text-lg leading-relaxed">{spaceInfo.description}</p>
 
@@ -473,7 +473,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+      <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
         <h4 className="font-bold text-gray-900 mb-6 text-xl text-center">Sélectionner les Dates</h4>
         <div className="flex justify-center bg-gray-50 p-6 rounded-xl border border-gray-200">
           <ReactCalendar
@@ -492,7 +492,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
   );
 
   const renderStep2 = () => (
-    <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+    <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
       <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Informations Personnelles</h3>
       <div className="grid md:grid-cols-2 gap-6">
         <div>
@@ -505,7 +505,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             id="fullName"
             value={formData.fullName}
             onChange={handleInputChange}
-            className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+            className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
             required
           />
         </div>
@@ -520,7 +520,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             id="activity"
             value={formData.activity}
             onChange={handleInputChange}
-            className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+            className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
             required
           />
         </div>
@@ -535,7 +535,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             id="company"
             value={formData.company}
             onChange={handleInputChange}
-            className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+            className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
           />
         </div>
 
@@ -549,7 +549,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             id="phone"
             value={formData.phone}
             onChange={handleInputChange}
-            className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+            className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
             required
           />
         </div>
@@ -564,7 +564,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
             id="email"
             value={formData.email}
             onChange={handleInputChange}
-            className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+            className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
             required
           />
         </div>
@@ -580,7 +580,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
           rows={3}
           value={formData.address}
           onChange={handleInputChange}
-          className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+          className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
         />
       </div>
 
@@ -598,7 +598,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
               id="occupants"
               value={formData.occupants}
               onChange={handleInputChange}
-              className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+              className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
             />
             {formData.occupants > spaceInfo.maxOccupants && (
               <p className="text-red-600 mt-2 font-medium">{t.validation.maxOccupants}</p>
@@ -615,7 +615,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
               value={formData.subscriptionType}
               onChange={handleInputChange}
               disabled={spaceType === 'bureau-prive'}
-              className="block w-full rounded-xl border-2 border-gray-200 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+              className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
             >
               <option value="daily">{t.form.daily}</option>
               <option value="monthly">{t.form.monthly}</option>
@@ -638,7 +638,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
     const total = calculateTotal();
 
     return (
-      <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+      <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
         <h2 className="text-2xl font-bold mb-8 text-center text-gray-900">{t.payment.title}</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -646,9 +646,9 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
           <button
             type="button"
             onClick={() => setPaymentMethod('mobileMoney')}
-            className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-200 ${
+            className={`group relative overflow-hidden rounded-xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-200 ${
               paymentMethod === 'mobileMoney'
-                ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-2xl ring-4 ring-orange-200'
+                ? 'bg-orange-600 text-white shadow-xl ring-4 ring-orange-200'
                 : 'bg-white border-2 border-gray-200 text-orange-600 hover:border-orange-300 hover:shadow-xl'
             }`}
           >
@@ -684,9 +684,9 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
           <button
             type="button"
             onClick={() => setPaymentMethod('visa')}
-            className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-200 ${
+            className={`group relative overflow-hidden rounded-xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-200 ${
               paymentMethod === 'visa'
-                ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-2xl ring-4 ring-blue-200'
+                ? 'bg-blue-600 text-white shadow-xl ring-4 ring-blue-200'
                 : 'bg-white border-2 border-gray-200 text-blue-600 hover:border-blue-300 hover:shadow-xl'
             }`}
           >
@@ -722,9 +722,9 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
           <button
             type="button"
             onClick={() => setPaymentMethod('cash')}
-            className={`group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-200 ${
+            className={`group relative overflow-hidden rounded-xl p-8 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-200 ${
               paymentMethod === 'cash'
-                ? 'bg-gradient-to-br from-green-600 to-green-700 text-white shadow-2xl ring-4 ring-green-200'
+                ? 'bg-green-600 text-white shadow-xl ring-4 ring-green-200'
                 : 'bg-white border-2 border-gray-200 text-green-600 hover:border-green-300 hover:shadow-xl'
             }`}
           >
@@ -803,11 +803,8 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
   };
 
   const renderStep4 = () => (
-    <div className="text-center space-y-8 p-12 bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl shadow-2xl border-2 border-green-200">
-      <div className="relative">
-        <div className="absolute inset-0 bg-green-200 rounded-full blur-xl opacity-30"></div>
-        <CheckCircle className="relative mx-auto w-24 h-24 text-green-500" />
-      </div>
+    <div className="text-center space-y-8 p-12 bg-white rounded-xl shadow-sm border border-gray-100">
+      <CheckCircle className="mx-auto w-24 h-24 text-green-500" />
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900">{t.success.title}</h2>
       <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">{t.success.message}</p>
       
@@ -827,7 +824,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
         </div>
       )}
       
-      <div className="bg-white p-6 rounded-xl border border-gray-200">
+      <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
         <p className="text-gray-600 mb-2">Référence de votre réservation</p>
         <p className="text-xl font-bold text-blue-600 font-mono">{transactionId}</p>
       </div>
@@ -857,7 +854,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
           setCheckingPayment(false);
           setPaymentWindow(null);
         }}
-        className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-semibold text-lg shadow-lg transform hover:scale-105"
+        className="px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold text-lg shadow-lg transform hover:scale-105"
       >
         {t.buttons.newReservation}
       </button>
@@ -866,13 +863,13 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="text-center mb-12 pt-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
             {t.title}
           </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-blue-700 mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
         </div>
 
         {renderStepIndicator()}
@@ -893,12 +890,12 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
           {currentStep === 4 && renderStep4()}
 
           {currentStep !== 4 && (
-            <div className="mt-12 flex justify-between items-center bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
+            <div className="mt-12 flex justify-between items-center bg-white p-6 rounded-xl shadow-sm border border-gray-200">
               {currentStep > 1 && (
                 <button
                   type="button"
                   onClick={prevStep}
-                  className="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-all duration-300 font-medium"
+                  className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all duration-300 font-medium"
                   disabled={paymentProcessing}
                 >
                   {t.buttons.previous}
@@ -908,7 +905,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
               {currentStep !== 3 && (
                 <button
                   type="submit"
-                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 ml-auto disabled:opacity-50 transition-all duration-300 font-semibold shadow-lg transform hover:scale-105"
+                  className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ml-auto disabled:opacity-50 transition-all duration-300 font-semibold shadow-lg transform hover:scale-105"
                   disabled={!validateStep(currentStep)}
                 >
                   {t.buttons.next}
@@ -919,7 +916,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
                 <button
                   type="button"
                   onClick={handleReservation}
-                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 ml-auto disabled:opacity-50 transition-all duration-300 font-semibold shadow-lg transform hover:scale-105"
+                  className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ml-auto disabled:opacity-50 transition-all duration-300 font-semibold shadow-lg transform hover:scale-105"
                   disabled={paymentProcessing || !paymentMethod}
                 >
                   {paymentProcessing ? 
