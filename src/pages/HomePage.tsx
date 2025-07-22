@@ -102,6 +102,7 @@ const bannerImages = [
   '/Bannière_Pack 5.png',
   '/Bannière_Pack 6.png'
 ];
+
 const HomePage: React.FC = () => {
   const [lang, setLang] = useState<'fr' | 'en'>('fr');
   const [darkMode, setDarkMode] = useState(false);
@@ -130,6 +131,7 @@ const HomePage: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
+
   const toggleDark = () => setDarkMode((d) => !d);
   const toggleLang = () => setLang((l) => (l === 'fr' ? 'en' : 'fr'));
 
@@ -202,10 +204,12 @@ const HomePage: React.FC = () => {
                   index === currentBannerIndex 
                     ? 'bg-nzoo-primary shadow-lg' 
                     : 'bg-nzoo-light hover:bg-nzoo-secondary'
-               }`}
+                }`}
+              />
             ))}
           </div>
         </section>
+
         {/* Hero Section */}
         <section className="relative flex items-center justify-center min-h-[60vh] bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
           <motion.div
