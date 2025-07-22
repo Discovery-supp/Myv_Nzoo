@@ -170,7 +170,7 @@ const HomePage: React.FC = () => {
         </div>
 
         {/* Carrousel de bannières */}
-        <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden bg-gray-100 dark:bg-gray-800">
+        <section className="relative h-80 md:h-96 lg:h-[500px] overflow-hidden bg-gray-100 dark:bg-gray-800">
           <div className="relative w-full h-full">
             {bannerImages.map((image, index) => (
               <motion.div
@@ -212,12 +212,12 @@ const HomePage: React.FC = () => {
           </div>
         </section>
         {/* Hero Section */}
-        <section className="relative flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 min-h-[80vh]">
+        <section className="relative flex items-center justify-center min-h-[60vh] bg-white dark:bg-gray-900">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="text-center text-white px-4 max-w-4xl"
+            className="text-center text-gray-900 dark:text-gray-100 px-4 max-w-4xl"
           >
             <h1 className="text-5xl font-bold leading-tight mb-6">{t.hero.title}</h1>
             <p className="text-xl mb-8 opacity-90">{t.hero.subtitle}</p>
