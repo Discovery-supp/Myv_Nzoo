@@ -241,23 +241,18 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
     const files = Array.from(e.target.files || []);
     setSelectedFiles(files);
     
-    // Convertir les fichiers en base64 pour l'aperçu
     files.forEach(file => {
-      if (file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const base64String = event.target?.result as string;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
           setFormData(prev => ({
             ...prev,
-            images: [...prev.images, base64String]
+            images: [...prev.images, event.target!.result as string]
           }));
-        };
-        reader.readAsDataURL(file);
-      }
+        }
+      };
+      reader.readAsDataURL(file);
     });
-    
-    // Réinitialiser l'input file
-    e.target.value = '';
   };
 
   if (loading) {
