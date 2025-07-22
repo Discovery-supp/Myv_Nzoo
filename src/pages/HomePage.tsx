@@ -321,12 +321,6 @@ const HomePage: React.FC = () => {
                   </div>
                   
                   {/* Book Button */}
-                  <Link
-                    to="/reservation/coworking"
-                    className="block bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-lg transition-all duration-200 font-medium hover:shadow-lg transform hover:-translate-y-1"
-                  >
-                    Réserver
-                  </Link>
                 </div>
               </motion.div>
 
@@ -390,12 +384,6 @@ const HomePage: React.FC = () => {
                   </div>
                   
                   {/* Book Button */}
-                  <Link
-                    to="/reservation/coworking"
-                    className="block bg-green-600 hover:bg-green-700 text-white text-center py-3 rounded-lg transition-all duration-200 font-medium hover:shadow-lg transform hover:-translate-y-1"
-                  >
-                    Réserver
-                  </Link>
                 </div>
               </motion.div>
 
@@ -459,12 +447,6 @@ const HomePage: React.FC = () => {
                   </div>
                   
                   {/* Book Button */}
-                  <Link
-                    to="/reservation/bureau-prive"
-                    className="block bg-purple-600 hover:bg-purple-700 text-white text-center py-3 rounded-lg transition-all duration-200 font-medium hover:shadow-lg transform hover:-translate-y-1"
-                  >
-                    Réserver
-                  </Link>
                 </div>
               </motion.div>
 
@@ -528,12 +510,6 @@ const HomePage: React.FC = () => {
                   </div>
                   
                   {/* Book Button */}
-                  <Link
-                    to="/reservation/coworking"
-                    className="block bg-orange-600 hover:bg-orange-700 text-white text-center py-3 rounded-lg transition-all duration-200 font-medium hover:shadow-lg transform hover:-translate-y-1"
-                  >
-                    Réserver
-                  </Link>
                 </div>
               </motion.div>
             </div>
