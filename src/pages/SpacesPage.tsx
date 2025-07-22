@@ -113,7 +113,7 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
         </div>
 
         {/* Header Section */}
-        <section className="relative py-48">
+        <section className="relative py-64">
           {/* Background Banner */}
           <div className="absolute inset-0 overflow-hidden">
             <img
