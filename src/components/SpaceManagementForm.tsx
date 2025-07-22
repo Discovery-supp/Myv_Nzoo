@@ -28,6 +28,7 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
   });
   const [newFeature, setNewFeature] = useState('');
   const [newImage, setNewImage] = useState('');
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const translations = {
     fr: {
@@ -163,6 +164,7 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
     setEditingSpace(null);
     setNewFeature('');
     setNewImage('');
+    setSelectedFiles([]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -237,21 +239,26 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      Array.from(files).forEach(file => {
+    const files = Array.from(e.target.files || []);
+    setSelectedFiles(files);
+    
+    // Convertir les fichiers en base64 pour l'aperçu
+    files.forEach(file => {
+      if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (event) => {
-          if (event.target?.result) {
-            setFormData(prev => ({
-              ...prev,
-              images: [...prev.images, event.target!.result as string]
-            }));
-          }
+          const base64String = event.target?.result as string;
+          setFormData(prev => ({
+            ...prev,
+            images: [...prev.images, base64String]
+          }));
         };
         reader.readAsDataURL(file);
-      });
-    }
+      }
+    });
+    
+    // Réinitialiser l'input file
+    e.target.value = '';
   };
 
   if (loading) {
