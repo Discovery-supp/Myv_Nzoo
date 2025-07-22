@@ -164,7 +164,6 @@ const SpaceManagementForm: React.FC<SpaceManagementFormProps> = ({ language }) =
     setEditingSpace(null);
     setNewFeature('');
     setNewImage('');
-    setSelectedFiles([]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
