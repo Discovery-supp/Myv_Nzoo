@@ -27,6 +27,8 @@ import {
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart as RechartsPieChart, Pie, Cell, AreaChart, Area } from 'recharts';
 import { useReservations } from '../hooks/useReservations';
 import SpaceManagementForm from '../components/SpaceManagementForm';
+import ReservationManagement from '../components/ReservationManagement';
+import UserManagement from '../components/UserManagement';
 
 interface AdminDashboardProps {
   language: 'fr' | 'en';
@@ -48,9 +50,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ language }) => {
       tabs: {
         overview: 'Vue d\'ensemble',
         reservations: 'Réservations',
+        reservationManagement: 'Gestion Réservations',
         revenue: 'Revenus',
         clients: 'Clients',
-        statistics: 'Statistiques'
+        statistics: 'Statistiques',
+        users: 'Utilisateurs'
       },
       stats: {
         totalReservations: 'Réservations Totales',
@@ -105,9 +109,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ language }) => {
       tabs: {
         overview: 'Overview',
         reservations: 'Reservations',
+        reservationManagement: 'Reservation Management',
         revenue: 'Revenue',
         clients: 'Clients',
-        statistics: 'Statistics'
+        statistics: 'Statistics',
+        users: 'Users'
       },
       stats: {
         totalReservations: 'Total Reservations',
@@ -759,10 +765,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ language }) => {
   const tabs = [
     { id: 'overview', label: t.tabs.overview, icon: BarChart3 },
     { id: 'reservations', label: t.tabs.reservations, icon: Calendar },
+    { id: 'reservationManagement', label: t.tabs.reservationManagement, icon: Calendar },
     { id: 'spaces', label: 'Espaces', icon: Building },
     { id: 'revenue', label: t.tabs.revenue, icon: DollarSign },
     { id: 'clients', label: t.tabs.clients, icon: Users },
-    { id: 'statistics', label: t.tabs.statistics, icon: TrendingUp }
+    { id: 'statistics', label: t.tabs.statistics, icon: TrendingUp },
+    { id: 'users', label: t.tabs.users, icon: Users }
   ];
 
   return (
@@ -818,9 +826,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ language }) => {
         <div className="animate-fadeIn">
           {activeTab === 'overview' && renderOverview()}
           {activeTab === 'reservations' && renderReservations()}
+          {activeTab === 'reservationManagement' && <ReservationManagement language={language} />}
           {activeTab === 'spaces' && <SpaceManagementForm language={language} />}
           {activeTab === 'revenue' && renderRevenue()}
           {activeTab === 'clients' && renderClients()}
+          {activeTab === 'users' && <UserManagement language={language} />}
           {activeTab === 'statistics' && (
             <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100 text-center">
               <BarChart3 className="w-16 h-16 text-gray-400 mx-auto mb-4" />

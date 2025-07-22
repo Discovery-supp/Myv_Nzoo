@@ -61,6 +61,8 @@ export interface Reservation {
   status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
   payment_status: 'pending' | 'paid' | 'failed'
   payment_method?: 'mobile_money' | 'visa'
+  notes?: string
+  admin_notes?: string
 }
 
 export interface Space {

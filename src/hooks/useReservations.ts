@@ -57,6 +57,22 @@ export const useReservations = () => {
     }
   }
 
+  const updateReservation = async (id: string, data: Partial<Reservation>) => {
+    try {
+      const { error } = await supabase
+        .from('reservations')
+        .update(data)
+        .eq('id', id)
+
+      if (error) throw error
+      
+      // Rafraîchir la liste
+      await fetchReservations()
+    } catch (err) {
+      throw new Error(err instanceof Error ? err.message : 'Erreur lors de la mise à jour')
+    }
+  }
+
   useEffect(() => {
     fetchReservations()
   }, [])
@@ -67,6 +83,7 @@ export const useReservations = () => {
     error,
     createReservation,
     updateReservationStatus,
+    updateReservation,
     refetch: fetchReservations
   }
 }
