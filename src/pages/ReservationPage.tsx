@@ -866,14 +866,14 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
   );
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 font-poppins">
+    <main className="min-h-screen bg-gradient-to-br from-sky-light-400 via-sky-light-500 to-sky-light-600 font-poppins">
       <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
         <div className="text-center mb-12 pt-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent font-montserrat">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-sky-light-500 to-sky-light-600 bg-clip-text text-transparent font-montserrat">
             {t.title}
           </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-sky-light-500 to-sky-light-600 mx-auto rounded-full"></div>
         </div>
 
       {renderStepIndicator()}

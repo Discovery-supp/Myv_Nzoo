@@ -10,6 +10,11 @@ export default {
         success: '#059669', // Vert moderne
         warning: '#d97706', // Orange moderne
         danger: '#dc2626', // Rouge moderne
+        'sky-light': {
+          400: '#38bdf8',
+          500: '#0ea5e9', 
+          600: '#0284c7'
+        },
         neutral: {
           50: '#f8fafc',
           100: '#f1f5f9',
