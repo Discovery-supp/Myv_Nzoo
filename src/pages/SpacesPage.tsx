@@ -117,8 +117,8 @@ const SpacesPage: React.FC<SpacesPageProps> = ({ language }) => {
           {/* Background Banner */}
           <div className="absolute inset-0 overflow-hidden bg-gradient-to-br from-blue-900/20 to-purple-900/20">
             <img
-              src="/salle_reunion1.jpg"
-              alt="Salle de réunion moderne"
+              src="/Bannière_Pack 2.png"
+              alt="Bannière Pack 2"
               className="w-full h-full object-cover object-center scale-110 opacity-90 transition-transform duration-700 hover:scale-115"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
