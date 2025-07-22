@@ -202,8 +202,7 @@ const HomePage: React.FC = () => {
                   index === currentBannerIndex 
                     ? 'bg-nzoo-primary shadow-lg' 
                     : 'bg-nzoo-light hover:bg-nzoo-secondary'
-                }`}
-              />
+               }`}
             ))}
           </div>
         </section>
