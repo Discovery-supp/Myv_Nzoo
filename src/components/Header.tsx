@@ -59,26 +59,26 @@ const Header: React.FC<HeaderProps> = ({ language, setLanguage, isAuthenticated,
           <nav className="hidden md:flex items-center space-x-8">
             <Link 
               to="/" 
-              className="text-gray-700 hover:text-sky-light-500 font-medium transition-colors duration-200"
+              className="text-nzoo-secondary hover:text-nzoo-primary font-medium transition-colors duration-200"
             >
               {t.home}
             </Link>
             <Link 
               to="/spaces" 
-              className="text-gray-700 hover:text-sky-light-500 font-medium transition-colors duration-200"
+              className="text-nzoo-secondary hover:text-nzoo-primary font-medium transition-colors duration-200"
             >
               Espaces
             </Link>
             <Link 
               to="/reservation/coworking" 
-              className="text-gray-700 hover:text-sky-light-500 font-medium transition-colors duration-200"
+              className="text-nzoo-secondary hover:text-nzoo-primary font-medium transition-colors duration-200"
             >
               {t.reservation}
             </Link>
             {isAuthenticated && (
               <Link 
                 to="/admin/dashboard" 
-                className="text-gray-700 hover:text-sky-light-500 font-medium transition-colors duration-200"
+                className="text-nzoo-secondary hover:text-nzoo-primary font-medium transition-colors duration-200"
               >
                 {t.admin}
               </Link>
@@ -89,11 +89,11 @@ const Header: React.FC<HeaderProps> = ({ language, setLanguage, isAuthenticated,
           <div className="flex items-center space-x-4">
             {/* Language switcher */}
             <div className="flex items-center space-x-2">
-              <Globe className="w-4 h-4 text-gray-500" />
+              <Globe className="w-4 h-4 text-nzoo-secondary" />
               <select
                 value={language}
                 onChange={(e) => setLanguage(e.target.value as 'fr' | 'en')}
-                className="bg-transparent border-none text-sm font-medium text-gray-700 focus:outline-none cursor-pointer"
+                className="bg-transparent border-none text-sm font-medium text-nzoo-secondary focus:outline-none cursor-pointer"
               >
                 <option value="fr">FR</option>
                 <option value="en">EN</option>
@@ -104,7 +104,7 @@ const Header: React.FC<HeaderProps> = ({ language, setLanguage, isAuthenticated,
             {isAuthenticated ? (
               <button
                 onClick={handleLogout}
-                className="flex items-center space-x-2 text-gray-700 hover:text-sky-light-500 transition-colors duration-200"
+                className="flex items-center space-x-2 text-nzoo-secondary hover:text-nzoo-primary transition-colors duration-200"
               >
                 <LogOut className="w-4 h-4" />
                 <span className="hidden sm:inline">{t.logout}</span>
@@ -112,7 +112,7 @@ const Header: React.FC<HeaderProps> = ({ language, setLanguage, isAuthenticated,
             ) : (
               <Link
                 to="/admin/login"
-                className="flex items-center space-x-2 text-gray-700 hover:text-sky-light-500 transition-colors duration-200"
+                className="flex items-center space-x-2 text-nzoo-secondary hover:text-nzoo-primary transition-colors duration-200"
               >
                 <User className="w-4 h-4" />
                 <span className="hidden sm:inline">Admin</span>
