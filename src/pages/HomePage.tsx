@@ -242,76 +242,92 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-24 bg-gray-50 relative overflow-hidden">
-          {/* Background decoration */}
-          <div className="absolute inset-0 bg-gray-50/50"></div>
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gray-200/20 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gray-200/20 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="services" className="py-24 bg-white dark:bg-gray-800">
+          <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-20 relative z-10"
+              className="text-center mb-16"
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 font-montserrat">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                 Nos Services
               </h2>
-              <div className="w-24 h-1 bg-blue-600 mx-auto mb-6 rounded-full"></div>
-              <p className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 max-w-4xl mx-auto leading-relaxed">
+              <div className="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
+              <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
                 Découvrez nos packs adaptés à tous vos besoins professionnels
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8 lg:gap-12 relative z-10">
+            <div className="grid md:grid-cols-2 gap-8">
               {/* Pack Startup & Freelance */}
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="bg-white dark:from-secondary/20 dark:to-accent/20 rounded-2xl p-8 border border-gray-200 dark:border-accent/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
+                whileHover={{ scale: 1.05 }}
+                className="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col"
               >
-                <div className="flex items-center mb-8">
-                 <div className="bg-blue-600 p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
-                   <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Startup" className="w-20 h-16 object-cover rounded-lg" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-200 font-montserrat">
+                <div className="relative overflow-hidden">
+                  <img
+                    src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+                    alt="Pack Startup & Freelance"
+                    className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
+                
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-2xl font-bold mb-3 text-blue-600 dark:text-blue-400">
                     PACK STARTUP & FREE-LANCE
                   </h3>
+                  
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 flex-grow">
+                    Destiné aux startups, freelances, télétravailleurs et professionnels à la recherche d'un espace flexible, accessible et stimulant.
+                  </p>
+                  
+                  {/* Features */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                      Équipements inclus :
+                    </h4>
+                    <ul className="space-y-1">
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                        Accès à un poste de travail en open space
+                      </li>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                        Connexion Internet haut débit
+                      </li>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                        Accès à l'espace détente (café/thé en option)
+                      </li>
+                      <li className="text-sm text-gray-500 italic">
+                        +2 autres...
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* Price and Capacity */}
+                  <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400 mb-6 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <span className="font-semibold">À partir de $300/mois</span>
+                    <span>ou $15/jour</span>
+                  </div>
+                  
+                  {/* Book Button */}
+                  <Link
+                    to="/reservation/coworking"
+                    className="block bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-lg transition-all duration-200 font-medium hover:shadow-lg transform hover:-translate-y-1"
+                  >
+                    Réserver
+                  </Link>
                 </div>
-                <p className="text-neutral-600 dark:text-neutral-300 mb-6 text-lg leading-relaxed">
-                  Destiné aux startups, freelances, télétravailleurs et professionnels à la recherche d'un espace flexible, accessible et stimulant.
-                </p>
-                <div className="mb-6 p-4 bg-gray-50 dark:bg-neutral-800/50 rounded-xl border border-gray-200">
-                  <span className="text-3xl font-bold text-blue-600 dark:text-neutral-200 font-montserrat">$300</span>
-                  <span className="text-neutral-600 dark:text-neutral-400 ml-2 text-lg">/mois</span>
-                  <div className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">ou $15/jour</div>
-                </div>
-                <ul className="space-y-3 text-neutral-600 dark:text-neutral-400">
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-blue-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Accès à un poste de travail en open space
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-blue-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Connexion Internet haut débit
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-blue-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Accès à l'espace détente (café/thé en option)
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-blue-600 rounded-full mr-3 flex-shrink-0"></span>
-                    2h gratuites de salles de réunion/semaine
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-blue-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Réception de courrier professionnel
-                  </li>
-                </ul>
               </motion.div>
 
               {/* Pack Welcome to Kin */}
@@ -320,45 +336,67 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-white dark:from-secondary/20 dark:to-accent/20 rounded-2xl p-8 border border-gray-200 dark:border-accent/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
+                whileHover={{ scale: 1.05 }}
+                className="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col"
               >
-                <div className="flex items-center mb-8">
-                 <div className="bg-green-600 p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
-                   <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Welcome" className="w-20 h-16 object-cover rounded-lg" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-200 font-montserrat">
+                <div className="relative overflow-hidden">
+                  <img
+                    src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+                    alt="Pack Welcome to Kin"
+                    className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
+                
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-2xl font-bold mb-3 text-green-600 dark:text-green-400">
                     PACK WELCOME TO KIN
                   </h3>
+                  
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 flex-grow">
+                    Destiné aux entrepreneurs étrangers, membres de la diaspora et professionnels internationaux souhaitant s'implanter à Kinshasa.
+                  </p>
+                  
+                  {/* Features */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                      Équipements inclus :
+                    </h4>
+                    <ul className="space-y-1">
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                        Accès à un poste de travail en open space
+                      </li>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                        Hébergement studio meublé à proximité
+                      </li>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                        Accompagnement personnalisé à l'installation
+                      </li>
+                      <li className="text-sm text-gray-500 italic">
+                        +2 autres...
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* Price and Capacity */}
+                  <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400 mb-6 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <span className="font-semibold">À partir de $1000/mois</span>
+                    <span>Pack complet</span>
+                  </div>
+                  
+                  {/* Book Button */}
+                  <Link
+                    to="/reservation/coworking"
+                    className="block bg-green-600 hover:bg-green-700 text-white text-center py-3 rounded-lg transition-all duration-200 font-medium hover:shadow-lg transform hover:-translate-y-1"
+                  >
+                    Réserver
+                  </Link>
                 </div>
-                <p className="text-neutral-600 dark:text-neutral-300 mb-6 text-lg leading-relaxed">
-                  Destiné aux entrepreneurs étrangers, membres de la diaspora et professionnels internationaux souhaitant s'implanter à Kinshasa.
-                </p>
-                <div className="mb-6 p-4 bg-gray-50 dark:bg-neutral-800/50 rounded-xl border border-gray-200">
-                  <span className="text-3xl font-bold text-green-600 dark:text-neutral-200 font-montserrat">$1000</span>
-                  <span className="text-neutral-600 dark:text-neutral-400 ml-2 text-lg">/mois</span>
-                </div>
-                <ul className="space-y-3 text-neutral-600 dark:text-neutral-400">
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-green-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Accès à un poste de travail en open space
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-green-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Hébergement studio meublé à proximité
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-green-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Accompagnement personnalisé à l'installation
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-green-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Services de secrétariat partiels
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-green-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Support bilingue (français/anglais)
-                  </li>
-                </ul>
               </motion.div>
 
               {/* Pack Invest Lounge */}
@@ -367,46 +405,67 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="bg-white dark:from-secondary/20 dark:to-accent/20 rounded-2xl p-8 border border-gray-200 dark:border-accent/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
+                whileHover={{ scale: 1.05 }}
+                className="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col"
               >
-                <div className="flex items-center mb-8">
-                 <div className="bg-purple-600 p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
-                   <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Investment" className="w-20 h-16 object-cover rounded-lg" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-200 font-montserrat">
+                <div className="relative overflow-hidden">
+                  <img
+                    src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+                    alt="Pack Invest Lounge"
+                    className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
+                
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-2xl font-bold mb-3 text-purple-600 dark:text-purple-400">
                     PACK INVEST LOUNGE
                   </h3>
+                  
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 flex-grow">
+                    Destiné aux investisseurs et Business Angels souhaitant s'implanter ou développer une activité à Kinshasa.
+                  </p>
+                  
+                  {/* Features */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                      Équipements inclus :
+                    </h4>
+                    <ul className="space-y-1">
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                        Recherche de partenariats fiables
+                      </li>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                        Facilitation des échanges locaux
+                      </li>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                        Visibilité aux projets
+                      </li>
+                      <li className="text-sm text-gray-500 italic">
+                        +2 autres...
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* Price and Capacity */}
+                  <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400 mb-6 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <span className="font-semibold">Sur mesure</span>
+                    <span>Personnalisé</span>
+                  </div>
+                  
+                  {/* Book Button */}
+                  <Link
+                    to="/reservation/bureau-prive"
+                    className="block bg-purple-600 hover:bg-purple-700 text-white text-center py-3 rounded-lg transition-all duration-200 font-medium hover:shadow-lg transform hover:-translate-y-1"
+                  >
+                    Réserver
+                  </Link>
                 </div>
-                <p className="text-neutral-600 dark:text-neutral-300 mb-6 text-lg leading-relaxed">
-                  Destiné aux investisseurs et Business Angels souhaitant s'implanter ou développer une activité à Kinshasa.
-                </p>
-                <div className="mb-6 p-4 bg-gray-50 dark:bg-neutral-800/50 rounded-xl border border-gray-200">
-                  <span className="text-2xl font-bold text-purple-600 dark:text-neutral-200 font-montserrat">
-                    Sur mesure
-                  </span>
-                </div>
-                <ul className="space-y-3 text-neutral-600 dark:text-neutral-400">
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-purple-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Recherche de partenariats fiables
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-purple-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Facilitation des échanges locaux
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-purple-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Visibilité aux projets
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-purple-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Identification des meilleurs profils
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-purple-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Suivi des projets financés
-                  </li>
-                </ul>
               </motion.div>
 
               {/* Domiciliation Commerciale */}
@@ -415,49 +474,67 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="bg-white dark:from-secondary/20 dark:to-accent/20 rounded-2xl p-8 border border-gray-200 dark:border-accent/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
+                whileHover={{ scale: 1.05 }}
+                className="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col"
               >
-                <div className="flex items-center mb-8">
-                 <div className="bg-orange-600 p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
-                   <img src="https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop" alt="Domiciliation" className="w-20 h-16 object-cover rounded-lg" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-200 font-montserrat">
+                <div className="relative overflow-hidden">
+                  <img
+                    src="https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+                    alt="Domiciliation Commerciale"
+                    className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
+                
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-2xl font-bold mb-3 text-orange-600 dark:text-orange-400">
                     DOMICILIATION COMMERCIALE
                   </h3>
-                </div>
-                <p className="text-neutral-600 dark:text-neutral-300 mb-6 text-lg leading-relaxed">
-                  Services de domiciliation commerciale destinée aux Startups, PME, Freelances et porteurs de projets.
-                </p>
-                <div className="mb-6 p-4 bg-gray-50 dark:bg-neutral-800/50 rounded-xl border border-gray-200">
-                  <span className="text-3xl font-bold text-orange-600 dark:text-neutral-200 font-montserrat">$800</span>
-                  <span className="text-neutral-600 dark:text-neutral-400 ml-2 text-lg">/an</span>
-                  <div className="text-sm text-neutral-500 dark:text-neutral-400 mt-2">
-                    ou $100/mois -
-                    Min 6 mois
+                  
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 flex-grow">
+                    Services de domiciliation commerciale destinée aux Startups, PME, Freelances et porteurs de projets.
+                  </p>
+                  
+                  {/* Features */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                      Équipements inclus :
+                    </h4>
+                    <ul className="space-y-1">
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                        Adresse légale à Kinshasa
+                      </li>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                        Gestion du courrier administratif
+                      </li>
+                      <li className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                        <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                        Attestation de domiciliation
+                      </li>
+                      <li className="text-sm text-gray-500 italic">
+                        +2 autres...
+                      </li>
+                    </ul>
                   </div>
+                  
+                  {/* Price and Capacity */}
+                  <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400 mb-6 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <span className="font-semibold">À partir de $800/an</span>
+                    <span>ou $100/mois</span>
+                  </div>
+                  
+                  {/* Book Button */}
+                  <Link
+                    to="/reservation/coworking"
+                    className="block bg-orange-600 hover:bg-orange-700 text-white text-center py-3 rounded-lg transition-all duration-200 font-medium hover:shadow-lg transform hover:-translate-y-1"
+                  >
+                    Réserver
+                  </Link>
                 </div>
-                <ul className="space-y-3 text-neutral-600 dark:text-neutral-400">
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-orange-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Adresse légale à Kinshasa
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-orange-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Gestion du courrier administratif
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-orange-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Attestation de domiciliation
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-orange-600 rounded-full mr-3 flex-shrink-0"></span>
-                    Création de site vitrine
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-3 h-3 bg-orange-600 rounded-full mr-3 flex-shrink-0"></span>
-                    2 jours/mois en coworking
-                  </li>
-                </ul>
               </motion.div>
             </div>
 
@@ -469,7 +546,7 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-center mt-16"
             >
-              <p className="text-xl text-neutral-600 dark:text-neutral-300 mb-8">
+              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
                 Besoin d'un pack personnalisé ? Contactez-nous pour une solution sur mesure.
               </p>
               <button
