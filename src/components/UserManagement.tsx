@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Save, X, User, Shield, Eye, EyeOff } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, User, Shield, Eye, EyeOff, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 
 import { supabase } from '../lib/supabase';
 
@@ -35,6 +35,17 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
     is_active: true
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  const [notification, setNotification] = useState<{
+    type: 'success' | 'error' | 'info';
+    message: string;
+  } | null>(null);
+
+  // Fonction pour afficher les notifications
+  const showNotification = (type: 'success' | 'error' | 'info', message: string) => {
+    setNotification({ type, message });
+    setTimeout(() => setNotification(null), 5000);
+  };
 
   // Charger les utilisateurs depuis la base de données
   const fetchUsers = async () => {
@@ -230,7 +241,7 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
           .eq('id', editingUser.id);
 
         if (error) throw error;
-        alert(t.messages.userUpdated);
+        showNotification('success', t.messages.userUpdated);
       } else {
         // Créer un nouvel utilisateur
         // Note: En production, le mot de passe devrait être hashé côté serveur
@@ -246,7 +257,7 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
           }]);
 
         if (error) throw error;
-        alert(t.messages.userCreated);
+        showNotification('success', t.messages.userCreated);
       }
 
       // Rafraîchir la liste des utilisateurs
@@ -255,7 +266,7 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
       resetForm();
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Erreur lors de l\'opération';
-      alert('Erreur: ' + errorMessage);
+      showNotification('error', 'Erreur: ' + errorMessage);
       console.error('Erreur base de données:', err);
     }
   };
@@ -289,11 +300,11 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
 
       if (error) throw error;
       
-      alert(t.messages.userDeleted);
+      showNotification('success', t.messages.userDeleted);
       await fetchUsers();
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Erreur lors de la suppression';
-      alert('Erreur: ' + errorMessage);
+      showNotification('error', 'Erreur: ' + errorMessage);
       console.error('Erreur suppression:', err);
     }
   };
@@ -340,6 +351,30 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
 
   return (
     <div className="space-y-6">
+      {/* Notification */}
+      {notification && (
+        <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg border-l-4 ${
+          notification.type === 'success' 
+            ? 'bg-green-50 border-green-400 text-green-700' 
+            : notification.type === 'error'
+            ? 'bg-red-50 border-red-400 text-red-700'
+            : 'bg-blue-50 border-blue-400 text-blue-700'
+        }`}>
+          <div className="flex items-center">
+            {notification.type === 'success' && <CheckCircle className="w-5 h-5 mr-2" />}
+            {notification.type === 'error' && <XCircle className="w-5 h-5 mr-2" />}
+            {notification.type === 'info' && <AlertCircle className="w-5 h-5 mr-2" />}
+            <span className="font-medium">{notification.message}</span>
+            <button
+              onClick={() => setNotification(null)}
+              className="ml-4 text-gray-400 hover:text-gray-600"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-900">{t.title}</h2>

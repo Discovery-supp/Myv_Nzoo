@@ -59,35 +59,27 @@ export const useReservations = () => {
 
   const updateReservation = async (id: string, data: Partial<Reservation>) => {
     try {
-      // Préparer les données pour Supabase (convertir les noms de champs)
-      const supabaseData: any = {};
-      
-      if (data.full_name !== undefined) supabaseData.full_name = data.full_name;
-      if (data.email !== undefined) supabaseData.email = data.email;
-      if (data.phone !== undefined) supabaseData.phone = data.phone;
-      if (data.company !== undefined) supabaseData.company = data.company;
-      if (data.activity !== undefined) supabaseData.activity = data.activity;
-      if (data.occupants !== undefined) supabaseData.occupants = data.occupants;
-      if (data.amount !== undefined) supabaseData.amount = data.amount;
-      if (data.status !== undefined) supabaseData.status = data.status;
-      if (data.payment_method !== undefined) supabaseData.payment_method = data.payment_method;
-      if (data.notes !== undefined) supabaseData.notes = data.notes;
-      if (data.admin_notes !== undefined) supabaseData.admin_notes = data.admin_notes;
-      
-      // Ajouter updated_at
-      supabaseData.updated_at = new Date().toISOString();
+      console.log('🔄 Mise à jour de la réservation:', id, data);
 
       const { error } = await supabase
         .from('reservations')
-        .update(supabaseData)
+        .update({
+          ...data,
+          updated_at: new Date().toISOString()
+        })
         .eq('id', id)
 
-      if (error) throw error
+      if (error) {
+        console.error('❌ Erreur Supabase:', error);
+        throw error;
+      }
+      
+      console.log('✅ Réservation mise à jour avec succès');
       
       // Rafraîchir la liste
       await fetchReservations()
     } catch (err) {
-      console.error('Erreur updateReservation:', err);
+      console.error('❌ Erreur updateReservation:', err);
       throw new Error(err instanceof Error ? err.message : 'Erreur lors de la mise à jour')
     }
   }

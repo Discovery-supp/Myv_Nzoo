@@ -141,16 +141,29 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
     });
   };
 
+  const [notification, setNotification] = useState<{
+    type: 'success' | 'error' | 'info';
+    message: string;
+  } | null>(null);
+
+  // Fonction pour afficher les notifications
+  const showNotification = (type: 'success' | 'error' | 'info', message: string) => {
+    setNotification({ type, message });
+    setTimeout(() => setNotification(null), 5000);
+  };
+
   const handleSave = async () => {
     if (!editingReservation) return;
     
     try {
+      console.log('💾 Sauvegarde des données:', editFormData);
       await updateReservation(editingReservation, editFormData);
+      showNotification('success', 'Réservation mise à jour avec succès');
       setEditingReservation(null);
       setEditFormData({});
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde: ' + (error instanceof Error ? error.message : 'Erreur inconnue'));
+      showNotification('error', 'Erreur lors de la sauvegarde: ' + (error instanceof Error ? error.message : 'Erreur inconnue'));
     }
   };
 
@@ -162,8 +175,10 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
   const handleStatusChange = async (reservationId: string, newStatus: Reservation['status']) => {
     try {
       await updateReservationStatus(reservationId, newStatus);
+      showNotification('success', 'Statut mis à jour avec succès');
     } catch (error) {
       console.error('Erreur lors du changement de statut:', error);
+      showNotification('error', 'Erreur lors du changement de statut');
     }
   };
 
@@ -203,6 +218,24 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
 
   return (
     <div className="space-y-6">
+      {/* Notification */}
+      {notification && (
+        <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg border-l-4 ${
+          notification.type === 'success' 
+            ? 'bg-green-50 border-green-400 text-green-700' 
+            : notification.type === 'error'
+            ? 'bg-red-50 border-red-400 text-red-700'
+            : 'bg-blue-50 border-blue-400 text-blue-700'
+        }`}>
+          <div className="flex items-center">
+            {notification.type === 'success' && <CheckCircle className="w-5 h-5 mr-2" />}
+            {notification.type === 'error' && <XCircle className="w-5 h-5 mr-2" />}
+            {notification.type === 'info' && <AlertCircle className="w-5 h-5 mr-2" />}
+            <span className="font-medium">{notification.message}</span>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-900">{t.title}</h2>
