@@ -242,9 +242,9 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-24 bg-light-gray dark:bg-neutral-800 relative overflow-hidden">
+        <section id="services" className="py-24 bg-white dark:bg-neutral-800 relative overflow-hidden">
           {/* Background decoration */}
-          <div className="absolute inset-0 bg-light-gray dark:from-secondary/5 dark:to-accent/5"></div>
+          <div className="absolute inset-0 bg-white dark:from-secondary/5 dark:to-accent/5"></div>
           <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-secondary/20 to-accent/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent/10 to-secondary/20 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
           
@@ -273,6 +273,7 @@ const HomePage: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="bg-light-gray dark:from-secondary/20 dark:to-accent/20 rounded-2xl p-8 border border-secondary/20 dark:border-accent/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
+                className="bg-white dark:from-secondary/20 dark:to-accent/20 rounded-2xl p-8 border border-secondary/20 dark:border-accent/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
               >
                 <div className="flex items-center mb-8">
                  <div className="bg-gradient-to-br from-secondary to-accent p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
@@ -320,7 +321,7 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-light-gray dark:from-accent/20 dark:to-neutral-800/50 rounded-2xl p-8 border border-accent/20 dark:border-accent/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
+                className="bg-white dark:from-accent/20 dark:to-neutral-800/50 rounded-2xl p-8 border border-accent/20 dark:border-accent/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
               >
                 <div className="flex items-center mb-8">
                  <div className="bg-gradient-to-br from-accent to-secondary p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
@@ -367,7 +368,7 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="bg-light-gray dark:from-success/20 dark:to-secondary/20 rounded-2xl p-8 border border-success/20 dark:border-success/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
+                className="bg-white dark:from-success/20 dark:to-secondary/20 rounded-2xl p-8 border border-success/20 dark:border-success/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
               >
                 <div className="flex items-center mb-8">
                  <div className="bg-gradient-to-br from-success to-secondary p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
@@ -415,7 +416,7 @@ const HomePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="bg-light-gray dark:from-warning/20 dark:to-neutral-800/50 rounded-2xl p-8 border border-warning/20 dark:border-warning/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
+                className="bg-white dark:from-warning/20 dark:to-neutral-800/50 rounded-2xl p-8 border border-warning/20 dark:border-warning/30 hover:shadow-2xl hover:scale-105 transition-all duration-500"
               >
                 <div className="flex items-center mb-8">
                  <div className="bg-gradient-to-br from-warning to-secondary p-4 rounded-xl mr-6 flex-shrink-0 shadow-lg">
