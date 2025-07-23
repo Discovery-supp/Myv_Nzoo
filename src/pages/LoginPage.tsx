@@ -112,19 +112,14 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
       // Vérifier le mot de passe (temporaire pour le développement)
       // En production, utilisez bcrypt ou une méthode de hachage sécurisée
       const isPasswordValid = 
-        user.password_hash === `temp_${credentials.password}` || // Nouveaux utilisateurs
-        (user.username === 'admin' && credentials.password === 'admin123') || // Utilisateur par défaut
-        (user.password_hash === 'temp_admin123' && credentials.password === 'admin123'); // Hash temporaire
+        user.password_hash === 'temp_admin123' && credentials.password === 'admin123';
 
       console.log('🔐 Validation mot de passe détaillée:', {
         inputPassword: credentials.password,
         storedHash: user.password_hash,
         isValid: isPasswordValid,
-        checks: {
-          tempPassword: user.password_hash === `temp_${credentials.password}`,
-          adminDefault: user.username === 'admin' && credentials.password === 'admin123',
-          tempAdmin123: user.password_hash === 'temp_admin123' && credentials.password === 'admin123'
-        }
+        expectedHash: 'temp_admin123',
+        expectedPassword: 'admin123'
       });
 
       if (isPasswordValid) {
