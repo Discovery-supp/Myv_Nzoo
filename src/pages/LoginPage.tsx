@@ -141,6 +141,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         isValid: isPasswordValid,
         comparison: `"${credentials.password}" === "${user.password_hash}"`
       });
+      console.log('🔐 Validation mot de passe:', {
         inputPassword: credentials.password,
         storedHash: user.password_hash,
         isValid: isPasswordValid,
