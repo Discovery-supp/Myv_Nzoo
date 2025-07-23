@@ -77,19 +77,18 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         .select('*')
         .eq('username', credentials.username)
         .eq('is_active', true)
-        .limit(1)
-        .single();
+        .limit(1);
 
       console.log('📊 Résultat requête:', { data, error });
 
-      if (error || !data) {
+      if (error || !data || data.length === 0) {
         console.log('❌ Utilisateur non trouvé ou erreur:', error);
         setError(t.error);
         setIsLoading(false);
         return;
       }
 
-      const user = data;
+      const user = data[0];
       console.log('👤 Utilisateur trouvé:', { username: user.username, password_hash: user.password_hash });
 
       // Vérifier le mot de passe (temporaire pour le développement)
