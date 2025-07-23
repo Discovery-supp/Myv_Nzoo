@@ -23,33 +23,48 @@ const LoginPageSimple: React.FC<LoginPageSimpleProps> = ({ setIsAuthenticated })
     setError('');
 
     try {
+      console.log('🔍 Tentative de connexion avec:', credentials.username);
+      
       // Utiliser la table admin_users au lieu de users
       const { data, error } = await supabase
         .from('admin_users')
         .select('*')
         .eq('username', credentials.username)
         .eq('is_active', true)
-        .limit(1);
+        .single();
 
-      if (error || !data || data.length === 0) {
+      console.log('📊 Résultat requête:', { data, error });
+
+      if (error || !data) {
+        console.log('❌ Utilisateur non trouvé ou erreur:', error);
         setError('Nom d\'utilisateur ou mot de passe incorrect');
         setIsLoading(false);
         return;
       }
 
-      const user = data[0];
+      const user = data;
+      console.log('👤 Utilisateur trouvé:', { username: user.username, password_hash: user.password_hash });
 
       // Vérifier le mot de passe (temporaire pour le développement)
       const isPasswordValid = 
         user.password_hash === `temp_${credentials.password}` || // Nouveaux utilisateurs
-        (user.username === 'admin' && credentials.password === 'admin123'); // Utilisateur par défaut
+        (user.username === 'admin' && credentials.password === 'admin123') || // Utilisateur par défaut
+        user.password_hash === 'temp_admin123' && credentials.password === 'admin123'; // Hash temporaire
+
+      console.log('🔐 Validation mot de passe:', {
+        inputPassword: credentials.password,
+        storedHash: user.password_hash,
+        isValid: isPasswordValid
+      });
 
       if (!isPasswordValid) {
+        console.log('❌ Mot de passe incorrect');
         setError('Nom d\'utilisateur ou mot de passe incorrect');
         setIsLoading(false);
         return;
       }
 
+      console.log('✅ Connexion réussie');
       // Stocker les informations utilisateur dans le localStorage
       localStorage.setItem('currentUser', JSON.stringify({
         id: user.id,
