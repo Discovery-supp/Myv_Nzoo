@@ -215,6 +215,49 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
       } catch (err) {
         console.error('Error validating email:', err);
       }
+    } else if (editingUser) {
+      // Check for duplicate email when editing (exclude current user)
+      try {
+        const { data: existingUser, error } = await supabase
+          .from('admin_users')
+          .select('id')
+          .eq('email', formData.email.trim())
+          .neq('id', editingUser.id)
+          .limit(1);
+
+        if (error) {
+          console.error('Error checking email:', error);
+        } else if (existingUser && existingUser.length > 0) {
+          errors.email = t.messages.emailExists;
+        }
+      } catch (err) {
+        console.error('Error validating email:', err);
+      }
+    }
+
+    // Vérifier l'unicité du nom d'utilisateur
+    if (formData.username.trim()) {
+      try {
+        const query = supabase
+          .from('admin_users')
+          .select('id')
+          .eq('username', formData.username.trim())
+          .limit(1);
+
+        if (editingUser) {
+          query.neq('id', editingUser.id);
+        }
+
+        const { data: existingUser, error } = await query;
+
+        if (error) {
+          console.error('Error checking username:', error);
+        } else if (existingUser && existingUser.length > 0) {
+          errors.username = 'Ce nom d\'utilisateur est déjà utilisé';
+        }
+      } catch (err) {
+        console.error('Error validating username:', err);
+      }
     }
 
     if (!editingUser && !formData.password.trim()) {
@@ -247,29 +290,35 @@ const UserManagement: React.FC<UserManagementProps> = ({ language }) => {
     try {
       if (editingUser) {
         // Mettre à jour l'utilisateur existant
+        const updateData: any = {
+          username: formData.username,
+          email: formData.email,
+          role: formData.role,
+          full_name: formData.full_name,
+          is_active: formData.is_active,
+          updated_at: new Date().toISOString()
+        };
+
+        // Mettre à jour le mot de passe seulement s'il est fourni
+        if (formData.password.trim()) {
+          updateData.password_hash = formData.password; // Stockage direct du mot de passe
+        }
+
         const { error } = await supabase
           .from('admin_users')
-          .update({
-            username: formData.username,
-            email: formData.email,
-            role: formData.role,
-            full_name: formData.full_name,
-            is_active: formData.is_active,
-            updated_at: new Date().toISOString()
-          })
+          .update(updateData)
           .eq('id', editingUser.id);
 
         if (error) throw error;
         showNotification('success', t.messages.userUpdated);
       } else {
         // Créer un nouvel utilisateur
-        // Note: En production, le mot de passe devrait être hashé côté serveur
         const { error } = await supabase
           .from('admin_users')
           .insert([{
             username: formData.username,
             email: formData.email,
-            password_hash: `temp_${formData.password}`, // Temporaire pour le développement
+            password_hash: formData.password, // Stockage direct du mot de passe
             role: formData.role,
             full_name: formData.full_name,
             is_active: formData.is_active
