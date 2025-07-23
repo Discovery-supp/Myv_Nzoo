@@ -79,29 +79,52 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         .eq('is_active', true)
         .limit(1);
 
-      console.log('📊 Résultat requête:', { data, error });
+      console.log('📊 Résultat requête:', { 
+        data, 
+        error, 
+        dataLength: data?.length,
+        hasData: !!data && data.length > 0 
+      });
 
       if (error || !data || data.length === 0) {
-        console.log('❌ Utilisateur non trouvé ou erreur:', error);
+        console.log('❌ Utilisateur non trouvé ou erreur:', { 
+          error, 
+          hasData: !!data, 
+          dataLength: data?.length,
+          searchedUsername: credentials.username 
+        });
         setError(t.error);
         setIsLoading(false);
         return;
       }
 
       const user = data[0];
-      console.log('👤 Utilisateur trouvé:', { username: user.username, password_hash: user.password_hash });
+      console.log('👤 Utilisateur trouvé:', { 
+        id: user.id,
+        username: user.username, 
+        email: user.email,
+        password_hash: user.password_hash,
+        role: user.role,
+        is_active: user.is_active,
+        created_at: user.created_at
+      });
 
       // Vérifier le mot de passe (temporaire pour le développement)
       // En production, utilisez bcrypt ou une méthode de hachage sécurisée
       const isPasswordValid = 
         user.password_hash === `temp_${credentials.password}` || // Nouveaux utilisateurs
         (user.username === 'admin' && credentials.password === 'admin123') || // Utilisateur par défaut
-        user.password_hash === 'temp_admin123' && credentials.password === 'admin123'; // Hash temporaire
+        (user.password_hash === 'temp_admin123' && credentials.password === 'admin123'); // Hash temporaire
 
-      console.log('🔐 Validation mot de passe:', {
+      console.log('🔐 Validation mot de passe détaillée:', {
         inputPassword: credentials.password,
         storedHash: user.password_hash,
-        isValid: isPasswordValid
+        isValid: isPasswordValid,
+        checks: {
+          tempPassword: user.password_hash === `temp_${credentials.password}`,
+          adminDefault: user.username === 'admin' && credentials.password === 'admin123',
+          tempAdmin123: user.password_hash === 'temp_admin123' && credentials.password === 'admin123'
+        }
       });
 
       if (isPasswordValid) {
@@ -118,11 +141,25 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         setIsAuthenticated(true);
         navigate('/admin/dashboard');
       } else {
-        console.log('❌ Mot de passe incorrect');
+        console.log('❌ Mot de passe incorrect - Détails:', {
+          inputPassword: credentials.password,
+          storedHash: user.password_hash,
+          username: user.username,
+          allChecks: {
+            tempPassword: user.password_hash === `temp_${credentials.password}`,
+            adminDefault: user.username === 'admin' && credentials.password === 'admin123',
+            tempAdmin123: user.password_hash === 'temp_admin123' && credentials.password === 'admin123'
+          }
+        });
         setError(t.error);
       }
     } catch (err) {
-      console.error('Erreur de connexion:', err);
+      console.error('❌ Erreur de connexion complète:', {
+        error: err,
+        message: err instanceof Error ? err.message : 'Erreur inconnue',
+        stack: err instanceof Error ? err.stack : undefined,
+        credentials: { username: credentials.username, passwordLength: credentials.password.length }
+      });
       setError('Erreur de connexion à la base de données');
     } finally {
       setIsLoading(false);
