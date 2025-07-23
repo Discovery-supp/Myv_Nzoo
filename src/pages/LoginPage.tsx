@@ -71,6 +71,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
     try {
       console.log('🔍 Tentative de connexion avec:', credentials.username);
       
+      console.log('🔍 Tentative de connexion avec:', credentials.username);
+      
       // Vérifier les identifiants dans la base de données
       const { data, error } = await supabase
         .from('admin_users')
@@ -86,7 +88,20 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         hasData: !!data && data.length > 0 
       });
 
+      console.log('📊 Résultat requête:', { 
+        data, 
+        error, 
+        dataLength: data?.length,
+        hasData: !!data && data.length > 0 
+      });
+
       if (error || !data || data.length === 0) {
+        console.log('❌ Utilisateur non trouvé ou erreur:', { 
+          error, 
+          hasData: !!data, 
+          dataLength: data?.length,
+          searchedUsername: credentials.username 
+        });
         console.log('❌ Utilisateur non trouvé ou erreur:', { 
           error, 
           hasData: !!data, 
@@ -105,15 +120,27 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         email: user.email,
         password_hash: user.password_hash,
         role: user.role,
+        is_active: user.is_active
+      });
+      console.log('👤 Utilisateur trouvé:', { 
+        id: user.id,
+        username: user.username, 
+        email: user.email,
+        password_hash: user.password_hash,
+        role: user.role,
         is_active: user.is_active,
         created_at: user.created_at
       });
 
-      // Vérifier le mot de passe (temporaire pour le développement)
-      // En production, utilisez bcrypt ou une méthode de hachage sécurisée
+      // Comparaison directe du mot de passe avec le hash stocké
       const isPasswordValid = user.password_hash === credentials.password;
 
-      console.log('🔐 Validation mot de passe détaillée:', {
+      console.log('🔐 Validation mot de passe:', {
+        inputPassword: credentials.password,
+        storedHash: user.password_hash,
+        isValid: isPasswordValid,
+        comparison: `"${credentials.password}" === "${user.password_hash}"`
+      });
         inputPassword: credentials.password,
         storedHash: user.password_hash,
         isValid: isPasswordValid,
@@ -121,6 +148,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
       });
 
       if (isPasswordValid) {
+        console.log('✅ Connexion réussie');
         console.log('✅ Connexion réussie');
         // Stocker les informations utilisateur dans le localStorage
         localStorage.setItem('currentUser', JSON.stringify({
@@ -134,6 +162,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         setIsAuthenticated(true);
         navigate('/admin/dashboard');
       } else {
+        console.log('❌ Mot de passe incorrect');
         console.log('❌ Mot de passe incorrect - Détails:', {
           inputPassword: credentials.password,
           storedHash: user.password_hash,
@@ -147,6 +176,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         setError(t.error);
       }
     } catch (err) {
+      console.error('❌ Erreur de connexion complète:', {
+        error: err,
+        message: err instanceof Error ? err.message : 'Erreur inconnue',
+        credentials: { username: credentials.username, passwordLength: credentials.password.length }
+      });
       console.error('❌ Erreur de connexion complète:', {
         error: err,
         message: err instanceof Error ? err.message : 'Erreur inconnue',
