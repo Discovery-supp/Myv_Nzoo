@@ -69,10 +69,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
     setError('');
 
     try {
-      console.log('🔍 Tentative de connexion avec:', credentials.username);
-      
-      console.log('🔍 Tentative de connexion avec:', credentials.username);
-      
       // Vérifier les identifiants dans la base de données
       const { data, error } = await supabase
         .from('admin_users')
@@ -81,76 +77,21 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         .eq('is_active', true)
         .limit(1);
 
-      console.log('📊 Résultat requête:', { 
-        data, 
-        error, 
-        dataLength: data?.length,
-        hasData: !!data && data.length > 0 
-      });
-
-      console.log('📊 Résultat requête:', { 
-        data, 
-        error, 
-        dataLength: data?.length,
-        hasData: !!data && data.length > 0 
-      });
-
       if (error || !data || data.length === 0) {
-        console.log('❌ Utilisateur non trouvé ou erreur:', { 
-          error, 
-          hasData: !!data, 
-          dataLength: data?.length,
-          searchedUsername: credentials.username 
-        });
-        console.log('❌ Utilisateur non trouvé ou erreur:', { 
-          error, 
-          hasData: !!data, 
-          dataLength: data?.length,
-          searchedUsername: credentials.username 
-        });
         setError(t.error);
         setIsLoading(false);
         return;
       }
 
       const user = data[0];
-      console.log('👤 Utilisateur trouvé:', { 
-        id: user.id,
-        username: user.username, 
-        email: user.email,
-        password_hash: user.password_hash,
-        role: user.role,
-        is_active: user.is_active
-      });
-      console.log('👤 Utilisateur trouvé:', { 
-        id: user.id,
-        username: user.username, 
-        email: user.email,
-        password_hash: user.password_hash,
-        role: user.role,
-        is_active: user.is_active,
-        created_at: user.created_at
-      });
 
-      // Comparaison directe du mot de passe avec le hash stocké
-      const isPasswordValid = user.password_hash === credentials.password;
-
-      console.log('🔐 Validation mot de passe:', {
-        inputPassword: credentials.password,
-        storedHash: user.password_hash,
-        isValid: isPasswordValid,
-        comparison: `"${credentials.password}" === "${user.password_hash}"`
-      });
-      console.log('🔐 Validation mot de passe:', {
-        inputPassword: credentials.password,
-        storedHash: user.password_hash,
-        isValid: isPasswordValid,
-        comparison: `"${credentials.password}" === "${user.password_hash}"`
-      });
+      // Vérifier le mot de passe (temporaire pour le développement)
+      // En production, utilisez bcrypt ou une méthode de hachage sécurisée
+      const isPasswordValid = 
+        user.password_hash === `temp_${credentials.password}` || // Nouveaux utilisateurs
+        (user.username === 'admin' && credentials.password === 'admin123'); // Utilisateur par défaut
 
       if (isPasswordValid) {
-        console.log('✅ Connexion réussie');
-        console.log('✅ Connexion réussie');
         // Stocker les informations utilisateur dans le localStorage
         localStorage.setItem('currentUser', JSON.stringify({
           id: user.id,
@@ -163,31 +104,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
         setIsAuthenticated(true);
         navigate('/admin/dashboard');
       } else {
-        console.log('❌ Mot de passe incorrect');
-        console.log('❌ Mot de passe incorrect - Détails:', {
-          inputPassword: credentials.password,
-          storedHash: user.password_hash,
-          username: user.username,
-          allChecks: {
-            tempPassword: user.password_hash === `temp_${credentials.password}`,
-            adminDefault: user.username === 'admin' && credentials.password === 'admin123',
-            tempAdmin123: user.password_hash === 'temp_admin123' && credentials.password === 'admin123'
-          }
-        });
         setError(t.error);
       }
     } catch (err) {
-      console.error('❌ Erreur de connexion complète:', {
-        error: err,
-        message: err instanceof Error ? err.message : 'Erreur inconnue',
-        credentials: { username: credentials.username, passwordLength: credentials.password.length }
-      });
-      console.error('❌ Erreur de connexion complète:', {
-        error: err,
-        message: err instanceof Error ? err.message : 'Erreur inconnue',
-        stack: err instanceof Error ? err.stack : undefined,
-        credentials: { username: credentials.username, passwordLength: credentials.password.length }
-      });
+      console.error('Erreur de connexion:', err);
       setError('Erreur de connexion à la base de données');
     } finally {
       setIsLoading(false);
