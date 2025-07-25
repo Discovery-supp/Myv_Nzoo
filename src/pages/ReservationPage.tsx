@@ -321,11 +321,17 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
       
       if (result.success) {
         setReservationSuccess(true);
-        setEmailSent(result.emailSent);
+        setEmailSent(result.emailSent || false);
         setCurrentStep(4);
+        
+        // Afficher une notification si l'email n'a pas été envoyé
+        if (!result.emailSent) {
+          console.warn('⚠️ Email de confirmation non envoyé pour la réservation:', result.reservation?.id);
+        }
       }
     } catch (error) {
       setReservationError(error instanceof Error ? error.message : 'Erreur lors de la réservation');
+      console.error('❌ Erreur lors de la réservation cash:', error);
     }
   };
 
@@ -728,7 +734,7 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
       {emailSent && (
         <div className="bg-green-50 border border-green-200 rounded-xl p-6">
           <p className="text-green-700 font-medium">
-            ✅ Email de confirmation envoyé avec succès
+            ✅ {language === 'fr' ? 'Email de confirmation envoyé avec succès' : 'Confirmation email sent successfully'}
           </p>
         </div>
       )}
@@ -736,7 +742,14 @@ const ReservationPage: React.FC<ReservationPageProps> = ({ language }) => {
       {!emailSent && (
         <div className="bg-orange-50 border border-orange-200 rounded-xl p-6">
           <p className="text-orange-700 font-medium">
-            ⚠️ Réservation confirmée, mais email non envoyé
+            ⚠️ {language === 'fr' 
+              ? 'Réservation confirmée, mais email de confirmation non envoyé. Veuillez noter votre référence de réservation.' 
+              : 'Reservation confirmed, but confirmation email not sent. Please note your reservation reference.'}
+          </p>
+          <p className="text-orange-600 text-sm mt-2">
+            {language === 'fr' 
+              ? 'Vous pouvez contacter notre support si vous avez besoin d\'une confirmation par email.' 
+              : 'You can contact our support if you need an email confirmation.'}
           </p>
         </div>
       )}

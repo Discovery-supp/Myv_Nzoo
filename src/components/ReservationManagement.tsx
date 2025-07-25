@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Edit, Save, X, CheckCircle, XCircle, Clock, AlertCircle, Mail, Phone, Eye } from 'lucide-react';
+import { Edit, Save, X, CheckCircle, XCircle, Clock, AlertCircle, Mail, Phone, Eye, Trash2 } from 'lucide-react';
 import { useReservations } from '../hooks/useReservations';
 import { type Reservation } from '../lib/supabase';
 
@@ -8,7 +8,7 @@ interface ReservationManagementProps {
 }
 
 const ReservationManagement: React.FC<ReservationManagementProps> = ({ language }) => {
-  const { reservations, loading, error, updateReservationStatus, updateReservation } = useReservations();
+  const { reservations, loading, error, updateReservationStatus, updateReservation, deleteReservation } = useReservations();
   const [editingReservation, setEditingReservation] = useState<string | null>(null);
   const [editFormData, setEditFormData] = useState<Partial<Reservation>>({});
   const [filterStatus, setFilterStatus] = useState<string>('all');

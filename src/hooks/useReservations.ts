@@ -84,6 +84,30 @@ export const useReservations = () => {
     }
   }
 
+  const deleteReservation = async (id: string) => {
+    try {
+      console.log('🗑️ Suppression de la réservation:', id);
+
+      const { error } = await supabase
+        .from('reservations')
+        .delete()
+        .eq('id', id)
+
+      if (error) {
+        console.error('❌ Erreur Supabase lors de la suppression:', error);
+        throw error;
+      }
+      
+      console.log('✅ Réservation supprimée avec succès');
+      
+      // Rafraîchir la liste
+      await fetchReservations()
+    } catch (err) {
+      console.error('❌ Erreur deleteReservation:', err);
+      throw new Error(err instanceof Error ? err.message : 'Erreur lors de la suppression')
+    }
+  }
+
   useEffect(() => {
     fetchReservations()
   }, [])
@@ -95,6 +119,7 @@ export const useReservations = () => {
     createReservation,
     updateReservationStatus,
     updateReservation,
+    deleteReservation,
     refetch: fetchReservations
   }
 }

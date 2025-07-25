@@ -30,9 +30,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
       error: 'Nom d\'utilisateur ou mot de passe incorrect',
       security: 'Connexion sécurisée SSL',
       demo: {
-        title: 'Compte de démonstration',
-        username: 'admin',
-        password: 'admin123'
+        
       }
     },
     en: {
@@ -45,9 +43,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, language }) =
       error: 'Invalid username or password',
       security: 'Secure SSL Connection',
       demo: {
-        title: 'Demo Account',
-        username: 'admin',
-        password: 'admin123'
+        
       }
     }
   };

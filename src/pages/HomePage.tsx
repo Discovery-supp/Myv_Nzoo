@@ -96,11 +96,12 @@ const texts = {
 
 // Images de bannière pour le carrousel
 const bannerImages = [
-  '/Bannière_Pack 1.png',
-  '/Bannière_Pack 2.png',
-  '/Bannière_Pack 3.png',
+  '/Bannières_Pack 1.png',
+  '/Bannières_Pack 6.png',
+  '/Bannières_Pack 4.png',
+  '/Bannières_Pack 2.png',
   '/Bannière_Pack 5.png',
-  '/Bannière_Pack 6.png'
+  '/Bannières_Pack 3.png',
 ];
 
 const HomePage: React.FC = () => {
@@ -168,12 +169,12 @@ const HomePage: React.FC = () => {
         </div>
 
         {/* Carrousel de bannières */}
-        <section className="relative h-96 md:h-[500px] lg:h-[600px] xl:h-[700px] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
+        <section className="relative h-[250px] sm:h-[350px] md:h-[450px] lg:h-[550px] xl:h-[650px] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
           <div className="relative w-full h-full">
             {bannerImages.map((image, index) => (
               <motion.div
                 key={index}
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0 w-full h-full flex items-center justify-center"
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ 
                   opacity: index === currentBannerIndex ? 1 : 0,
@@ -184,7 +185,7 @@ const HomePage: React.FC = () => {
                 <img
                   src={image}
                   alt={`Bannière ${index + 1}`}
-                  className="w-full h-full object-cover scale-105"
+                  className="w-full h-full object-contain sm:object-cover max-w-full max-h-full"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
@@ -195,12 +196,12 @@ const HomePage: React.FC = () => {
           </div>
           
           {/* Indicateurs de pagination */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
             {bannerImages.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentBannerIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                   index === currentBannerIndex 
                     ? 'bg-primary shadow-lg' 
                     : 'bg-neutral-300 hover:bg-neutral-400'
@@ -211,29 +212,29 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Hero Section */}
-        <section className="relative flex items-center justify-center min-h-[60vh] bg-gradient-to-br from-secondary/10 via-white to-accent/10 dark:from-neutral-900 dark:via-neutral-800 dark:to-primary/20">
+        <section className="relative flex items-center justify-center min-h-[50vh] sm:min-h-[60vh] bg-gradient-to-br from-secondary/10 via-white to-accent/10 dark:from-neutral-900 dark:via-neutral-800 dark:to-primary/20">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             className="text-center text-neutral-900 dark:text-neutral-100 px-4 max-w-5xl"
           >
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-8 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent font-montserrat">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 sm:mb-8 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent font-montserrat">
               {t.hero.title}
             </h1>
-            <p className="text-xl md:text-2xl mb-12 text-neutral-600 dark:text-neutral-300 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl mb-8 sm:mb-12 text-neutral-600 dark:text-neutral-300 max-w-4xl mx-auto leading-relaxed px-2">
               {t.hero.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={goToSpaces}
-                className="bg-gradient-to-r from-secondary to-accent hover:from-accent hover:to-secondary text-white py-4 px-8 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105 font-semibold text-lg"
+                className="bg-gradient-to-r from-secondary to-accent hover:from-accent hover:to-secondary text-white py-3 px-6 sm:py-4 sm:px-8 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105 font-semibold text-base sm:text-lg w-full sm:w-auto"
               >
                 {t.hero.ctaPrimary}
               </button>
               <button
                 onClick={() => window.scrollTo({ top: document.querySelector('#services')?.offsetTop, behavior: 'smooth' })}
-                className="border-2 border-secondary text-secondary hover:bg-secondary hover:text-white py-4 px-8 rounded-xl transition-all duration-300 font-semibold text-lg"
+                className="border-2 border-secondary text-secondary hover:bg-secondary hover:text-white py-3 px-6 sm:py-4 sm:px-8 rounded-xl transition-all duration-300 font-semibold text-base sm:text-lg w-full sm:w-auto"
               >
                 Découvrir nos services
               </button>
@@ -272,7 +273,7 @@ const HomePage: React.FC = () => {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+                    src="/Vignette_1.png"
                     alt="Pack Startup & Freelance"
                     className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
                     loading="lazy"
@@ -335,7 +336,7 @@ const HomePage: React.FC = () => {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+                    src="/Vignette_2.png"
                     alt="Pack Welcome to Kin"
                     className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
                     loading="lazy"
@@ -398,7 +399,7 @@ const HomePage: React.FC = () => {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+                    src="/Vignette_3.png"
                     alt="Pack Invest Lounge"
                     className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
                     loading="lazy"
@@ -461,7 +462,7 @@ const HomePage: React.FC = () => {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src="https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+                    src="/Vignette_4.png"
                     alt="Domiciliation Commerciale"
                     className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
                     loading="lazy"
