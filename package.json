@@ -1,4 +1,13 @@
 {
+  "name": "nzooimmo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "lucide-react": "^0.539.0"
   }
