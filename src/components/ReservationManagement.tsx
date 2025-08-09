@@ -36,6 +36,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
       amount: 'Montant',
       actions: 'Actions',
       noReservations: 'Aucune réservation trouvée',
+      editReservation: 'Modifier la réservation',
       form: {
         fullName: 'Nom complet',
         email: 'Email',
@@ -70,6 +71,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
       amount: 'Amount',
       actions: 'Actions',
       noReservations: 'No reservations found',
+      editReservation: 'Edit Reservation',
       form: {
         fullName: 'Full name',
         email: 'Email',
