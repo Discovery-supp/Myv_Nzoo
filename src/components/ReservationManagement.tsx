@@ -36,16 +36,18 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
       amount: 'Montant',
       actions: 'Actions',
       noReservations: 'Aucune réservation trouvée',
-      editReservation: 'Modifier la réservation',
-      fullName: 'Nom complet',
-      email: 'Email',
-      phone: 'Téléphone',
-      company: 'Entreprise',
-      activity: 'Activité',
-      occupants: 'Occupants',
-      paymentMethod: 'Méthode de paiement',
-      notes: 'Notes',
-      adminNotes: 'Notes admin'
+      form: {
+        fullName: 'Nom complet',
+        email: 'Email',
+        phone: 'Téléphone',
+        company: 'Entreprise',
+        activity: 'Activité',
+        occupants: 'Occupants',
+        amount: 'Montant',
+        paymentMethod: 'Méthode de paiement',
+        notes: 'Notes',
+        adminNotes: 'Notes admin'
+      }
     },
     en: {
       title: 'Reservation Management',
@@ -68,16 +70,18 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
       amount: 'Amount',
       actions: 'Actions',
       noReservations: 'No reservations found',
-      editReservation: 'Edit reservation',
-      fullName: 'Full name',
-      email: 'Email',
-      phone: 'Phone',
-      company: 'Company',
-      activity: 'Activity',
-      occupants: 'Occupants',
-      paymentMethod: 'Payment method',
-      notes: 'Notes',
-      adminNotes: 'Admin notes'
+      form: {
+        fullName: 'Full name',
+        email: 'Email',
+        phone: 'Phone',
+        company: 'Company',
+        activity: 'Activity',
+        occupants: 'Occupants',
+        amount: 'Amount',
+        paymentMethod: 'Payment method',
+        notes: 'Notes',
+        adminNotes: 'Admin notes'
+      }
     }
   };
 
@@ -368,7 +372,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.fullName}
+                      {t.form.fullName}
                     </label>
                     <input
                       type="text"
@@ -379,7 +383,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.email}
+                      {t.form.email}
                     </label>
                     <input
                       type="email"
@@ -390,7 +394,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.phone}
+                      {t.form.phone}
                     </label>
                     <input
                       type="tel"
@@ -401,7 +405,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.company}
+                      {t.form.company}
                     </label>
                     <input
                       type="text"
@@ -412,7 +416,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.activity}
+                      {t.form.activity}
                     </label>
                     <input
                       type="text"
@@ -423,7 +427,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.occupants}
+                      {t.form.occupants}
                     </label>
                     <input
                       type="number"
@@ -434,7 +438,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.amount}
+                      {t.form.amount}
                     </label>
                     <input
                       type="number"
@@ -463,7 +467,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.notes}
+                    {t.form.notes}
                   </label>
                   <textarea
                     rows={3}
@@ -475,7 +479,7 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.adminNotes}
+                    {t.form.adminNotes}
                   </label>
                   <textarea
                     rows={3}
