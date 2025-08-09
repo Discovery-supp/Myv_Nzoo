@@ -43,7 +43,6 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
       company: 'Entreprise',
       activity: 'Activité',
       occupants: 'Occupants',
-      amount: 'Montant',
       paymentMethod: 'Méthode de paiement',
       notes: 'Notes',
       adminNotes: 'Notes admin'
@@ -76,7 +75,6 @@ const ReservationManagement: React.FC<ReservationManagementProps> = ({ language 
       company: 'Company',
       activity: 'Activity',
       occupants: 'Occupants',
-      amount: 'Amount',
       paymentMethod: 'Payment method',
       notes: 'Notes',
       adminNotes: 'Admin notes'
